@@ -1,11 +1,23 @@
+import React from "react";
 import { Metadata } from "next";
-import { Hero } from "@/components/hero/Hero";
+import { HeroSection } from "@/components/home/HeroSection";
+import { FeaturedSection } from "@/components/home/FeaturedSection";
+import { HowToExploreSection } from "@/components/home/HowToExploreSection";
+import { MultiverseRadarSection } from "@/components/home/MultiverseRadarSection";
 
 export const metadata: Metadata = {
-  title: "Spider-Verse Explorer | Travel Across the Multiverse",
-  description: "Explore the Spider-Verse and meet Spider-People across dimensions.",
+  title: "Spider-Verse Explorer | One Multiverse. Infinite Spider-People.",
+  description:
+    "An animated multi-page explorer where visitors travel across the multiverse, filter dimensional frequencies, and meet the Spider-People.",
 };
 
 export default function LandingPage() {
-  return <Hero />;
+  return (
+    <div className="flex flex-col w-full overflow-hidden">
+      <HeroSection />
+      <FeaturedSection />
+      <HowToExploreSection />
+      <MultiverseRadarSection />
+    </div>
+  );
 }
