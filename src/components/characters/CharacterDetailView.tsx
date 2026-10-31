@@ -32,7 +32,7 @@ export function CharacterDetailView({
   const returnUrl = `/explore${returnQueryString ? `?${returnQueryString}` : ""}`;
 
   return (
-    <div className="relative min-h-screen bg-[#07070a] pt-28 pb-24 overflow-hidden">
+    <div className="relative min-h-screen bg-[#07070a] pt-32 md:pt-36 pb-24 overflow-hidden">
       {/* Background Spider Web Canvas */}
       <div className="absolute inset-0 opacity-15 pointer-events-none">
         <AnimatedWeb

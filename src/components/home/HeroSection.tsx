@@ -82,7 +82,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
+          className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20 relative z-20"
         >
           <Link
             href="/explore"
@@ -106,11 +106,11 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="relative max-w-3xl mx-auto pt-4"
+          className="relative max-w-3xl mx-auto mt-4 pt-2 z-10"
         >
           <div className="grid grid-cols-3 gap-3 md:gap-6">
             {previewCharacters.map((char, index) => {
-              const offsets = ["md:-rotate-3 md:-translate-y-2", "md:rotate-0 md:translate-y-0", "md:rotate-3 md:-translate-y-2"];
+              const offsets = ["md:-rotate-2", "md:rotate-0", "md:rotate-2"];
               return (
                 <Link
                   key={char.id}

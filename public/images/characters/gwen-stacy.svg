@@ -1,70 +1,115 @@
-<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gwen Stacy in white hooded Spider-Gwen suit with neon magenta and teal web lining">
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gwen Stacy Spider-Gwen in white hooded suit with vibrant magenta-cyan web lining">
   <defs>
-    <radialGradient id="gs-bg" cx="50%" cy="40%" r="65%">
-      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.3"/>
-      <stop offset="50%" stop-color="#ff4081" stop-opacity="0.15"/>
-      <stop offset="85%" stop-color="#10101c" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#06060c" stop-opacity="1"/>
+    <!-- Background Gradient -->
+    <radialGradient id="gs-vortex" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.4"/>
+      <stop offset="35%" stop-color="#ff4081" stop-opacity="0.25"/>
+      <stop offset="75%" stop-color="#140f24" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#05050c" stop-opacity="1"/>
     </radialGradient>
-    <linearGradient id="gs-hood" x1="0%" y1="0%" x2="100%" y2="100%">
+
+    <!-- White Hood Gradient -->
+    <linearGradient id="gs-hood-grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="70%" stop-color="#f0f4f8"/>
+      <stop offset="65%" stop-color="#f0f4f8"/>
       <stop offset="100%" stop-color="#cfd8dc"/>
     </linearGradient>
-    <filter id="gs-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+
+    <!-- Neon Glow Filter -->
+    <filter id="gs-neon-glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="4" result="blur1"/>
+      <feGaussianBlur stdDeviation="8" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
+
+    <!-- Halftone Pattern -->
+    <pattern id="gs-halftone" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="1.5" fill="#ff4081" opacity="0.18"/>
+    </pattern>
   </defs>
 
-  <!-- Background Frame -->
-  <rect width="400" height="400" rx="24" fill="url(#gs-bg)"/>
+  <!-- Background Layer -->
+  <rect width="500" height="500" rx="28" fill="url(#gs-vortex)"/>
+  <rect width="500" height="500" rx="28" fill="url(#gs-halftone)"/>
 
-  <!-- Subtle Watercolor / Drum Rhythm Soundwaves -->
+  <!-- Watercolor Sound Wave Rhythm Lines (Drummer Beat) -->
   <g stroke="#00e5ff" stroke-width="1.5" opacity="0.25" fill="none">
-    <circle cx="200" cy="180" r="140" stroke-dasharray="8 6"/>
-    <circle cx="200" cy="180" r="180" opacity="0.15"/>
-    <path d="M60 180 Q100 120 140 180 T220 180 T300 180 T340 180" stroke="#ff4081" opacity="0.3"/>
+    <circle cx="250" cy="230" r="160" stroke-dasharray="6 8"/>
+    <circle cx="250" cy="230" r="210" opacity="0.18"/>
+    <path d="M80 230 Q140 160 200 230 T320 230 T420 230" stroke="#ff4081" stroke-width="2" opacity="0.35"/>
   </g>
 
-  <!-- Aerodynamic Shoulders (Black with Teal Accents) -->
-  <path d="M100 380 C120 300, 160 270, 200 270 C240 270, 280 300, 300 380 Z" fill="#101018" stroke="#000" stroke-width="4"/>
-  <path d="M105 350 C125 315, 155 305, 175 305 L175 380" stroke="#00e5ff" stroke-width="3" fill="none" opacity="0.8"/>
-  <path d="M295 350 C275 315, 245 305, 225 305 L225 380" stroke="#00e5ff" stroke-width="3" fill="none" opacity="0.8"/>
+  <!-- Aerodynamic Torso & Shoulders (Black with Neon Teal Ribbons) -->
+  <g>
+    <!-- Dark Torso Base -->
+    <path d="M120 480 C145 380, 195 340, 250 340 C305 340, 355 380, 380 480 Z" fill="#0c0c14" stroke="#000000" stroke-width="6"/>
 
-  <!-- Inside Hood Webbing (Magenta & Teal geometric pattern) -->
+    <!-- Teal Aerodynamic Side Torso Ribbons -->
+    <path d="M130 450 C150 405, 190 380, 215 380 L215 480" stroke="#00e5ff" stroke-width="4" fill="none" opacity="0.85" filter="url(#gs-neon-glow)"/>
+    <path d="M370 450 C350 405, 310 380, 285 380 L285 480" stroke="#00e5ff" stroke-width="4" fill="none" opacity="0.85" filter="url(#gs-neon-glow)"/>
+
+    <!-- White Collar V-Shape -->
+    <polygon points="215,340 250,385 285,340" fill="#ffffff" stroke="#000" stroke-width="3"/>
+  </g>
+
+  <!-- HOOD INTERIOR & GEOMETRIC WEBBING (Vibrant Magenta & Cyan) -->
   <g fill="none">
-    <path d="M120 180 C115 100, 150 65, 200 60 C250 65, 285 100, 280 180 C275 240, 250 275, 200 275 C150 275, 125 240, 120 180 Z" fill="#ff4081" opacity="0.15"/>
-    <!-- Hood Interior Web Rays -->
-    <path d="M200 70 L135 150 M200 70 L265 150 M200 70 L130 200 M200 70 L270 200" stroke="#ff4081" stroke-width="1.8" opacity="0.5"/>
-    <path d="M145 130 Q200 95 255 130" stroke="#00e5ff" stroke-width="2" opacity="0.6"/>
-    <path d="M135 170 Q200 130 265 170" stroke="#00e5ff" stroke-width="2" opacity="0.6"/>
-    <path d="M138 210 Q200 170 262 210" stroke="#ff4081" stroke-width="2" opacity="0.5"/>
+    <!-- Interior Hood Depth Shape -->
+    <path d="M150 230 C140 120, 190 70, 250 65 C310 70, 360 120, 350 230 C345 310, 310 355, 250 355 C190 355, 155 310, 150 230 Z" fill="#ff4081" opacity="0.22"/>
+
+    <!-- Webbing Rays Radiating from Crown Inside Hood -->
+    <g stroke="#ff4081" stroke-width="2.5" opacity="0.6">
+      <path d="M250 80 L168 180"/>
+      <path d="M250 80 L332 180"/>
+      <path d="M250 80 L160 250"/>
+      <path d="M250 80 L340 250"/>
+      <path d="M250 80 L180 320"/>
+      <path d="M250 80 L320 320"/>
+    </g>
+
+    <!-- Concentric Web Arcs Inside Hood (Teal / Cyan) -->
+    <g stroke="#00e5ff" stroke-width="2.5" opacity="0.75" filter="url(#gs-neon-glow)">
+      <path d="M185 150 Q250 110 315 150"/>
+      <path d="M170 205 Q250 155 330 205"/>
+      <path d="M172 260 Q250 210 328 260"/>
+      <path d="M185 310 Q250 270 315 310"/>
+    </g>
   </g>
 
-  <!-- Mask Base (Pure White) -->
-  <ellipse cx="200" cy="180" rx="64" ry="80" fill="#ffffff" stroke="#12121a" stroke-width="4"/>
-  <!-- Subtle Chin Contour -->
-  <path d="M170 240 Q200 255 230 240" stroke="#cfd8dc" stroke-width="2" fill="none"/>
+  <!-- MASK BASE (Pure White Ceramic Finish) -->
+  <g>
+    <!-- Mask Silhouette -->
+    <ellipse cx="250" cy="230" rx="80" ry="100" fill="#ffffff" stroke="#101018" stroke-width="5"/>
+    <!-- Gentle Jawline Shading -->
+    <path d="M210 305 Q250 325 290 305" stroke="#b0bec5" stroke-width="3" fill="none" opacity="0.5"/>
+  </g>
 
-  <!-- Sleek Spider-Gwen Mask Eye Lenses (Sharp, Elongated, Pink Rim with Teal Reflection) -->
-  <g filter="url(#gs-glow)">
-    <!-- Left Eye Lens -->
-    <path d="M148 162 C152 142, 172 138, 188 152 C184 174, 168 186, 152 182 C148 176, 146 168, 148 162 Z" fill="#000000" stroke="#ff4081" stroke-width="5"/>
-    <path d="M154 158 Q174 146 182 154" stroke="#00e5ff" stroke-width="3" fill="none"/>
+  <!-- SLEEK SPIDER-GWEN EYE LENSES -->
+  <g filter="url(#gs-neon-glow)">
+    <!-- Left Eye Lens (Jet Black with Neon Pink Rim & Cyan Slit Reflection) -->
+    <path d="M185 208 C190 178, 218 172, 238 192 C232 225, 210 240, 190 234 C184 226, 182 216, 185 208 Z" fill="#06060c" stroke="#ff4081" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M192 202 Q218 186 230 196" stroke="#00e5ff" stroke-width="4" stroke-linecap="round" fill="none"/>
 
     <!-- Right Eye Lens -->
-    <path d="M252 162 C248 142, 228 138, 212 152 C216 174, 232 186, 248 182 C252 176, 254 168, 252 162 Z" fill="#000000" stroke="#ff4081" stroke-width="5"/>
-    <path d="M246 158 Q226 146 218 154" stroke="#00e5ff" stroke-width="3" fill="none"/>
+    <path d="M315 208 C310 178, 282 172, 262 192 C268 225, 290 240, 310 234 C316 226, 318 216, 315 208 Z" fill="#06060c" stroke="#ff4081" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M308 202 Q282 186 270 196" stroke="#00e5ff" stroke-width="4" stroke-linecap="round" fill="none"/>
   </g>
 
-  <!-- The Iconic White Hood Outer Shell (Draped Over Head and Shoulders) -->
-  <path d="M100 190 C95 90, 140 40, 200 38 C260 40, 305 90, 300 190 C300 260, 275 305, 260 315 C245 325, 225 305, 200 305 C175 305, 155 325, 140 315 C125 305, 100 260, 100 190 Z" fill="none" stroke="#ffffff" stroke-width="12" stroke-linejoin="round"/>
-  <path d="M100 190 C95 90, 140 40, 200 38 C260 40, 305 90, 300 190 C300 260, 275 305, 260 315 C245 325, 225 305, 200 305 C175 305, 155 325, 140 315 C125 305, 100 260, 100 190 Z" fill="none" stroke="#000000" stroke-width="3"/>
-  <!-- Hood Drape Highlight Line -->
-  <path d="M115 185 C110 110, 150 55, 200 52 C250 55, 290 110, 285 185" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+  <!-- THE ICONIC DRAPED WHITE HOOD (Bold Comic Contour & Shadows) -->
+  <g>
+    <!-- Hood Thick White Outer Drape -->
+    <path d="M125 240 C118 115, 175 50, 250 46 C325 50, 382 115, 375 240 C375 330, 345 390, 325 405 C305 420, 280 395, 250 395 C220 395, 195 420, 175 405 C155 390, 125 330, 125 240 Z" fill="none" stroke="url(#gs-hood-grad)" stroke-width="16" stroke-linejoin="round"/>
+    <path d="M125 240 C118 115, 175 50, 250 46 C325 50, 382 115, 375 240 C375 330, 345 390, 325 405 C305 420, 280 395, 250 395 C220 395, 195 420, 175 405 C155 390, 125 330, 125 240 Z" fill="none" stroke="#000000" stroke-width="4"/>
 
-  <!-- Comic Outer Frame -->
-  <rect x="8" y="8" width="384" height="384" rx="20" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.4"/>
-  <rect x="4" y="4" width="392" height="392" rx="22" fill="none" stroke="#000000" stroke-width="3"/>
+    <!-- Hood Fabric Specular Highlights -->
+    <path d="M145 230 C140 135, 190 70, 250 66 C310 70, 360 135, 355 230" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.8"/>
+  </g>
+
+  <!-- Outer Comic Stamped Frame -->
+  <rect x="10" y="10" width="480" height="480" rx="22" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.45"/>
+  <rect x="5" y="5" width="490" height="490" rx="25" fill="none" stroke="#000000" stroke-width="4"/>
 </svg>

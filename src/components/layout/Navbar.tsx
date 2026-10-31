@@ -58,7 +58,7 @@ export function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 border-b border-[#1f1f2e] bg-[#07070a]/90 backdrop-blur-md"
         role="banner"
       >
-        <div className="container mx-auto px-4 h-18 flex items-center justify-between">
+        <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">
           {/* Comic Logo */}
           <Link
             href="/"

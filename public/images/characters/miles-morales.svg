@@ -1,100 +1,149 @@
-<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Miles Morales in black and red Spider-Man suit with bio-electric energy">
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Miles Morales in black and red Spider-Man suit with bio-electric venom blast">
   <defs>
-    <radialGradient id="mm-bg" cx="50%" cy="40%" r="60%">
-      <stop offset="0%" stop-color="#ff1361" stop-opacity="0.3"/>
-      <stop offset="70%" stop-color="#101018" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#06060a" stop-opacity="1"/>
+    <!-- Background Gradient -->
+    <radialGradient id="mm-vortex" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#ff1361" stop-opacity="0.45"/>
+      <stop offset="45%" stop-color="#1a0b18" stop-opacity="0.85"/>
+      <stop offset="85%" stop-color="#0a0a12" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#040407" stop-opacity="1"/>
     </radialGradient>
-    <linearGradient id="mm-suit" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1f1f28"/>
-      <stop offset="60%" stop-color="#0e0e14"/>
-      <stop offset="100%" stop-color="#08080c"/>
+
+    <!-- Suit Fabric Gradients -->
+    <linearGradient id="mm-black-suit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a2a38"/>
+      <stop offset="35%" stop-color="#14141d"/>
+      <stop offset="70%" stop-color="#09090f"/>
+      <stop offset="100%" stop-color="#030305"/>
     </linearGradient>
-    <filter id="mm-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+
+    <linearGradient id="mm-spray-red" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff1744"/>
+      <stop offset="50%" stop-color="#d50000"/>
+      <stop offset="100%" stop-color="#9b0000"/>
+    </linearGradient>
+
+    <!-- Glowing Eye Filter -->
+    <filter id="mm-neon-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur1"/>
+      <feGaussianBlur stdDeviation="10" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
+
+    <!-- Comic Halftone Pattern -->
+    <pattern id="mm-halftone" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="1.5" fill="#ff1361" opacity="0.2"/>
+    </pattern>
   </defs>
 
-  <!-- Background -->
-  <rect width="400" height="400" rx="24" fill="url(#mm-bg)"/>
-  
-  <!-- Subtle Halftone Dots -->
-  <g fill="#ff1361" opacity="0.12">
-    <circle cx="40" cy="40" r="2"/><circle cx="80" cy="40" r="2"/><circle cx="120" cy="40" r="2"/>
-    <circle cx="280" cy="40" r="2"/><circle cx="320" cy="40" r="2"/><circle cx="360" cy="40" r="2"/>
-    <circle cx="40" cy="80" r="2"/><circle cx="360" cy="80" r="2"/>
-    <circle cx="40" cy="320" r="2"/><circle cx="80" cy="360" r="2"/><circle cx="320" cy="360" r="2"/><circle cx="360" cy="320" r="2"/>
+  <!-- Background Layer -->
+  <rect width="500" height="500" rx="28" fill="url(#mm-vortex)"/>
+  <rect width="500" height="500" rx="28" fill="url(#mm-halftone)"/>
+
+  <!-- Comic Action Speed Rays -->
+  <g stroke="#ff1361" stroke-width="1.2" opacity="0.25">
+    <line x1="250" y1="40" x2="250" y2="460"/>
+    <line x1="40" y1="250" x2="460" y2="250"/>
+    <line x1="80" y1="80" x2="420" y2="420"/>
+    <line x1="80" y1="420" x2="420" y2="80"/>
+    <circle cx="250" cy="250" r="160" fill="none" stroke-dasharray="8 8"/>
+    <circle cx="250" cy="250" r="210" fill="none" opacity="0.4"/>
   </g>
 
-  <!-- Spider-Verse Dimension Webbing Background -->
-  <g stroke="#ff1361" stroke-width="1" opacity="0.25">
-    <path d="M200 40 L200 360"/>
-    <path d="M40 200 L360 200"/>
-    <path d="M80 80 L320 320"/>
-    <path d="M80 320 L320 80"/>
-    <circle cx="200" cy="200" r="70" fill="none"/>
-    <circle cx="200" cy="200" r="130" fill="none" stroke-dasharray="6 6"/>
+  <!-- Dramatic Rim Light Aura Behind Mask -->
+  <ellipse cx="250" cy="220" rx="130" ry="155" fill="#ff1361" opacity="0.22" filter="url(#mm-neon-glow)"/>
+
+  <!-- Torso & Shoulders -->
+  <g>
+    <!-- Suit Body Base -->
+    <path d="M100 480 C125 360, 180 320, 250 320 C320 320, 375 360, 400 480 Z" fill="url(#mm-black-suit)" stroke="#000000" stroke-width="6"/>
+    <!-- Red Shoulder Accent Stripes (Miles Across the Spider-Verse Suit) -->
+    <path d="M125 450 C145 375, 185 345, 215 340 L210 375 C185 380, 155 405, 140 460 Z" fill="url(#mm-spray-red)"/>
+    <path d="M375 450 C355 375, 315 345, 285 340 L290 375 C315 380, 345 405, 360 460 Z" fill="url(#mm-spray-red)"/>
+
+    <!-- Iconic Spray-Painted Red Spider Chest Insignia -->
+    <g fill="url(#mm-spray-red)" stroke="#ff1744" stroke-width="1.5" filter="url(#mm-neon-glow)">
+      <!-- Spider Abdomen -->
+      <path d="M250 380 C240 380, 235 410, 245 430 C248 436, 252 436, 255 430 C265 410, 260 380, 250 380 Z"/>
+      <!-- Spider Head -->
+      <circle cx="250" cy="370" r="8"/>
+      <!-- Spray Paint Splatter Legs -->
+      <path d="M244 374 L210 350 L185 370 M244 384 L200 384 L175 400 M244 394 L205 408 L185 435 M244 402 L215 428 L200 460" fill="none" stroke="#d50000" stroke-width="5" stroke-linecap="round"/>
+      <path d="M256 374 L290 350 L315 370 M256 384 L300 384 L325 400 M256 394 L295 408 L315 435 M256 402 L285 428 L300 460" fill="none" stroke="#d50000" stroke-width="5" stroke-linecap="round"/>
+      <!-- Stencil Spray Drips -->
+      <circle cx="200" cy="470" r="3" fill="#ff1744"/>
+      <circle cx="300" cy="470" r="3" fill="#ff1744"/>
+      <circle cx="250" cy="445" r="2.5" fill="#ff1744"/>
+    </g>
+
+    <!-- Collar / Neck Base -->
+    <path d="M215 280 L215 330 L285 330 L285 280 Z" fill="#14141d" stroke="#000" stroke-width="4"/>
   </g>
 
-  <!-- Shoulders / Torso -->
-  <path d="M90 380 C110 300, 150 260, 200 260 C250 260, 290 300, 310 380 Z" fill="url(#mm-suit)" stroke="#000000" stroke-width="4"/>
-  <!-- Red Spray-Painted Chest Spider Emblem -->
-  <g fill="#e52521" stroke="#ff1361" stroke-width="1.5">
-    <!-- Spider Body -->
-    <ellipse cx="200" cy="320" rx="9" ry="16"/>
-    <circle cx="200" cy="304" r="6"/>
-    <!-- Spider Legs (Spray paint angular jagged style) -->
-    <path d="M195 310 L170 295 L150 310 M195 318 L165 318 L145 330 M195 324 L168 335 L152 355 M195 330 L175 348 L165 370" fill="none" stroke="#e52521" stroke-width="4" stroke-linecap="round"/>
-    <path d="M205 310 L230 295 L250 310 M205 318 L235 318 L255 330 M205 324 L232 335 L248 355 M205 330 L225 348 L235 370" fill="none" stroke="#e52521" stroke-width="4" stroke-linecap="round"/>
-    <!-- Spray Paint Drips -->
-    <circle cx="165" cy="378" r="2.5" fill="#e52521"/>
-    <circle cx="235" cy="378" r="2.5" fill="#e52521"/>
+  <!-- MASK & HEAD -->
+  <g>
+    <!-- Head Silhouette with Comic Anatomy -->
+    <path d="M250 85 C325 85, 355 145, 350 220 C345 285, 305 325, 250 330 C195 325, 155 285, 150 220 C145 145, 175 85, 250 85 Z" fill="url(#mm-black-suit)" stroke="#07070b" stroke-width="7"/>
+
+    <!-- Subtle Mask Fabric Specular Shading -->
+    <path d="M190 100 C230 90, 270 90, 310 100 C330 140, 335 180, 335 220 C295 200, 205 200, 165 220 C165 180, 170 140, 190 100 Z" fill="#ffffff" opacity="0.06"/>
+
+    <!-- Red Webbing on Mask (Stylized Spider-Verse Red Webbing) -->
+    <g stroke="#e52521" stroke-width="3" opacity="0.75" fill="none" stroke-linecap="round">
+      <!-- Center Forehead Ridge -->
+      <path d="M250 88 L250 326"/>
+      <!-- Upper Web Radiations -->
+      <path d="M250 180 Q200 170 162 150"/>
+      <path d="M250 180 Q300 170 338 150"/>
+      <!-- Cheeks & Jaw Web Radiations -->
+      <path d="M250 220 Q195 225 168 250"/>
+      <path d="M250 220 Q305 225 332 250"/>
+      <path d="M250 260 Q205 275 185 300"/>
+      <path d="M250 260 Q295 275 315 300"/>
+      <!-- Concentric Web Arcs -->
+      <path d="M205 130 Q250 115 295 130"/>
+      <path d="M185 160 Q250 142 315 160"/>
+    </g>
+
+    <!-- SIGNATURE MILES MORALES EYE LENSES -->
+    <g filter="url(#mm-neon-glow)">
+      <!-- Left Eye Outer Red Rim -->
+      <path d="M178 185 C176 150, 210 145, 235 168 C230 205, 212 232, 185 228 C178 218, 176 200, 178 185 Z" fill="#ffffff" stroke="#e52521" stroke-width="8" stroke-linejoin="round"/>
+      <!-- Left Eye Inner Cyan Chromatic Accent -->
+      <path d="M190 192 L225 178" stroke="#00e5ff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+      <!-- Left Eye Shading Tone -->
+      <path d="M182 195 Q200 220 222 210" stroke="#cfd8dc" stroke-width="2.5" fill="none" opacity="0.6"/>
+
+      <!-- Right Eye Outer Red Rim -->
+      <path d="M322 185 C324 150, 290 145, 265 168 C270 205, 288 232, 315 228 C322 218, 324 200, 322 185 Z" fill="#ffffff" stroke="#e52521" stroke-width="8" stroke-linejoin="round"/>
+      <!-- Right Eye Inner Cyan Chromatic Accent -->
+      <path d="M310 192 L275 178" stroke="#00e5ff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+      <!-- Right Eye Shading Tone -->
+      <path d="M318 195 Q300 220 278 210" stroke="#cfd8dc" stroke-width="2.5" fill="none" opacity="0.6"/>
+    </g>
   </g>
 
-  <!-- Neck -->
-  <path d="M172 230 L172 270 L228 270 L228 230 Z" fill="#14141d"/>
+  <!-- BIO-ELECTRIC VENOM BLAST CRACKLES (Electric Yellow & Cyan Energy) -->
+  <g filter="url(#mm-neon-glow)">
+    <!-- Left Venom Sparks -->
+    <path d="M135 160 L155 178 L142 190 L165 210" fill="none" stroke="#ffe600" stroke-width="4" stroke-linecap="round"/>
+    <path d="M120 185 L138 200 L130 215" fill="none" stroke="#00e5ff" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="138" cy="155" r="3.5" fill="#ffe600"/>
 
-  <!-- Head Base -->
-  <ellipse cx="200" cy="175" rx="72" ry="92" fill="url(#mm-suit)" stroke="#0a0a0f" stroke-width="5"/>
+    <!-- Right Venom Sparks -->
+    <path d="M365 160 L345 178 L358 190 L335 210" fill="none" stroke="#ffe600" stroke-width="4" stroke-linecap="round"/>
+    <path d="M380 185 L362 200 L370 215" fill="none" stroke="#00e5ff" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="362" cy="155" r="3.5" fill="#ffe600"/>
 
-  <!-- Webbing on Face -->
-  <g stroke="#000000" stroke-width="2.5" opacity="0.6" fill="none">
-    <path d="M200 90 L200 260"/>
-    <path d="M200 160 Q160 155 132 145"/>
-    <path d="M200 160 Q240 155 268 145"/>
-    <path d="M200 190 Q160 195 136 210"/>
-    <path d="M200 190 Q240 195 264 210"/>
-    <path d="M200 225 Q170 232 150 248"/>
-    <path d="M200 225 Q230 232 250 248"/>
+    <!-- Shoulder Venom Arcs -->
+    <path d="M170 330 L185 345 L175 360 L195 375" fill="none" stroke="#ffe600" stroke-width="3" stroke-linecap="round"/>
+    <path d="M330 330 L315 345 L325 360 L305 375" fill="none" stroke="#ffe600" stroke-width="3" stroke-linecap="round"/>
   </g>
 
-  <!-- Red Accent Trim Lines on Mask -->
-  <path d="M140 115 C160 100, 240 100, 260 115" fill="none" stroke="#ff1361" stroke-width="2" opacity="0.4"/>
-  <path d="M135 220 C160 250, 240 250, 265 220" fill="none" stroke="#ff1361" stroke-width="2" opacity="0.4"/>
-
-  <!-- Miles Morales Signature Angular Lenses with Red Outer Rim -->
-  <g filter="url(#mm-glow)">
-    <!-- Left Lens Outer Red Rim -->
-    <path d="M145 152 C145 132, 168 128, 188 145 C185 168, 170 186, 149 184 C145 178, 145 162, 145 152 Z" fill="#ffffff" stroke="#e52521" stroke-width="6"/>
-    <!-- Left Lens Inner Shading -->
-    <path d="M152 155 L178 148" stroke="#00e5ff" stroke-width="2" opacity="0.7"/>
-
-    <!-- Right Lens Outer Red Rim -->
-    <path d="M255 152 C255 132, 232 128, 212 145 C215 168, 230 186, 251 184 C255 178, 255 162, 255 152 Z" fill="#ffffff" stroke="#e52521" stroke-width="6"/>
-    <!-- Right Lens Inner Shading -->
-    <path d="M248 155 L222 148" stroke="#00e5ff" stroke-width="2" opacity="0.7"/>
-  </g>
-
-  <!-- Bio-Electric Venom Blast Sparks (Yellow/Cyan) -->
-  <g stroke="#ffe600" stroke-width="2.5" stroke-linecap="round" fill="none" filter="url(#mm-glow)">
-    <path d="M110 130 L120 142 L114 148 L128 162"/>
-    <path d="M290 130 L280 142 L286 148 L272 162"/>
-    <circle cx="112" cy="126" r="2" fill="#ffe600"/>
-    <circle cx="288" cy="126" r="2" fill="#00e5ff"/>
-  </g>
-
-  <!-- Comic Outer Border -->
-  <rect x="8" y="8" width="384" height="384" rx="20" fill="none" stroke="#ff1361" stroke-width="2" opacity="0.3"/>
-  <rect x="4" y="4" width="392" height="392" rx="22" fill="none" stroke="#000000" stroke-width="3"/>
+  <!-- Outer Comic Stamped Frame -->
+  <rect x="10" y="10" width="480" height="480" rx="22" fill="none" stroke="#ff1361" stroke-width="3" opacity="0.4"/>
+  <rect x="5" y="5" width="490" height="490" rx="25" fill="none" stroke="#000000" stroke-width="4"/>
 </svg>
