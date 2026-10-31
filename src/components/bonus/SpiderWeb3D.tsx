@@ -61,15 +61,17 @@ function WebParticles({ count = 150 }: { count?: number }) {
     ref.current = particles;
   }, [count]);
 
+  if (!ref.current) return null;
   return <primitive object={ref.current} />;
 }
 
 function WebLines() {
   const linesRef = useRef<THREE.Line[]>([]);
+  const [ready, setReady] = useState(false);
   const reducedMotion = useReducedMotion();
 
   useFrame(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || !ready) return;
     const time = performance.now() * 0.001;
     linesRef.current.forEach((line, i) => {
       line.rotation.y = time * (0.1 + i * 0.05);
@@ -101,6 +103,7 @@ function WebLines() {
       group.add(line);
       linesRef.current.push(line);
     }
+    setReady(true);
     return () => {
       linesRef.current.forEach((line) => {
         line.geometry.dispose();
@@ -109,6 +112,7 @@ function WebLines() {
     };
   }, []);
 
+  if (!ready) return null;
   return <group>{linesRef.current.map((line, i) => <primitive key={i} object={line} />)}</group>;
 }
 
