@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Grid } from "@react-three/drei";
@@ -9,8 +9,42 @@ import { CHARACTER_MODELS, type CharacterModelConfig } from "@/data/character-mo
 import { SkinnedModelAvatar } from "@/components/game/SkinnedModelAvatar";
 import { ArrowLeft, CheckCircle, AlertTriangle, Eye, Shield, Activity, Info } from "lucide-react";
 
+import { useThree } from "@react-three/fiber";
+
 type ViewAngle = "front" | "side" | "back" | "three-quarter";
 type AnimMode = "idle" | "walk" | "run" | "jump";
+
+function CameraViewSetter({ viewAngle }: { viewAngle: ViewAngle }) {
+  const { camera } = useThree();
+
+  useEffect(() => {
+    switch (viewAngle) {
+      case "front":
+        camera.position.set(0, 1.15, 2.8);
+        break;
+      case "side":
+        camera.position.set(2.8, 1.15, 0);
+        break;
+      case "back":
+        camera.position.set(0, 1.15, -2.8);
+        break;
+      case "three-quarter":
+      default:
+        camera.position.set(2.2, 1.4, 2.6);
+        break;
+    }
+    camera.lookAt(0, 1.1, 0);
+  }, [viewAngle, camera]);
+
+  return (
+    <OrbitControls
+      target={[0, 1.1, 0]}
+      minDistance={1.2}
+      maxDistance={7}
+      maxPolarAngle={Math.PI / 2 + 0.05} // don't dip below floor
+    />
+  );
+}
 
 function InspectionScene({
   activeId,
@@ -66,13 +100,8 @@ function InspectionScene({
         />
       </group>
 
-      {/* Orbit Controls with controlled framing */}
-      <OrbitControls
-        target={[0, 1.1, 0]}
-        minDistance={1.5}
-        maxDistance={7}
-        maxPolarAngle={Math.PI / 2 + 0.05} // don't dip below floor
-      />
+      {/* View Angle Camera Controller */}
+      <CameraViewSetter viewAngle={viewAngle} />
     </>
   );
 }
@@ -105,21 +134,43 @@ export default function CharacterInspectPage() {
             </span>
           </div>
 
-          {/* Animation State Selector */}
-          <div className="flex items-center gap-1.5 pointer-events-auto bg-[#141422]/90 p-1 rounded-xl border border-[#2a2a3e] backdrop-blur-md">
-            {(["idle", "walk", "run", "jump"] as AnimMode[]).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => setAnimMode(mode)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold uppercase transition-all ${
-                  animMode === mode
-                    ? "bg-[#00e5ff] text-black shadow-[1px_1px_0px_#000]"
-                    : "text-gray-400 hover:text-white"
-                }`}
-              >
-                {mode}
-              </button>
-            ))}
+          {/* View Angle & Animation Selectors */}
+          <div className="flex items-center gap-2 pointer-events-auto">
+            {/* View Angle Selector */}
+            <div className="flex items-center gap-1 bg-[#141422]/90 p-1 rounded-xl border border-[#2a2a3e] backdrop-blur-md">
+              <span className="text-[10px] font-mono text-gray-400 px-1.5 uppercase">Angle:</span>
+              {(["three-quarter", "front", "side", "back"] as ViewAngle[]).map((angle) => (
+                <button
+                  key={angle}
+                  onClick={() => setViewAngle(angle)}
+                  className={`px-2 py-0.5 rounded-lg text-xs font-bold capitalize transition-all ${
+                    viewAngle === angle
+                      ? "bg-[#ff1361] text-white shadow-[1px_1px_0px_#000]"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {angle.replace("-", " ")}
+                </button>
+              ))}
+            </div>
+
+            {/* Animation Clip Selector */}
+            <div className="flex items-center gap-1 bg-[#141422]/90 p-1 rounded-xl border border-[#2a2a3e] backdrop-blur-md">
+              <span className="text-[10px] font-mono text-gray-400 px-1.5 uppercase">Clip:</span>
+              {(["idle", "walk", "run", "jump"] as AnimMode[]).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => setAnimMode(mode)}
+                  className={`px-2.5 py-0.5 rounded-lg text-xs font-bold uppercase transition-all ${
+                    animMode === mode
+                      ? "bg-[#00e5ff] text-black shadow-[1px_1px_0px_#000]"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {mode}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -136,7 +187,7 @@ export default function CharacterInspectPage() {
 
         {/* Viewport Instructions */}
         <div className="absolute bottom-4 left-4 z-20 pointer-events-none text-[11px] font-mono text-gray-400 bg-black/60 px-3 py-1.5 rounded-lg backdrop-blur-sm border border-white/10">
-          Left Drag: Orbit • Right Drag: Pan • Scroll: Zoom • Neutral Studio Lights
+          Left Drag: Orbit • Right Drag: Pan • Scroll: Zoom • Neutral 3-Point Studio Lights
         </div>
       </div>
 
@@ -205,20 +256,39 @@ export default function CharacterInspectPage() {
             </div>
 
             <div className="flex justify-between">
-              <span className="text-gray-400">Scale Ratio:</span>
+              <span className="text-gray-400">Polygon Budget:</span>
               <span className="text-[#00e5ff]">
-                [{currentConfig.scale.map((s) => s.toFixed(4)).join(", ")}]
+                {selectedSlug === "miles-morales"
+                  ? "33,042 Tris (6 Meshes)"
+                  : selectedSlug === "peter-parker"
+                  ? "6,400 Tris (Proxy)"
+                  : "~2,800 Tris (Proxy)"}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-gray-400">Skeletal Hierarchy:</span>
+              <span className="text-[#ff1361]">
+                {selectedSlug === "miles-morales"
+                  ? "65 Joints (Mixamo Armature)"
+                  : selectedSlug === "peter-parker"
+                  ? "68 Joints (Vanguard)"
+                  : "Articulated Hierarchy"}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-gray-400">Texture Atlas:</span>
+              <span className="text-gray-200">
+                {selectedSlug === "miles-morales"
+                  ? "1024×1024 sRGB PNG (30KB)"
+                  : "Procedural PBR"}
               </span>
             </div>
 
             <div className="flex justify-between">
               <span className="text-gray-400">Ground Alignment:</span>
               <span className="text-emerald-400">Y = 0.00m (Grounded)</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span className="text-gray-400">Camera Target:</span>
-              <span className="text-white">Height: {currentConfig.cameraTargetHeight}m</span>
             </div>
 
             <div className="flex justify-between">

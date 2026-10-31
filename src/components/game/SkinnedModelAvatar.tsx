@@ -109,14 +109,44 @@ function SkinnedMeshRenderer({
         mesh.receiveShadow = true;
 
         if (avatarId === "miles-morales") {
-          // Across the Spider-Verse matte black suit & red accents
-          mesh.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color("#0d0d12"),
-            roughness: 0.35,
-            metalness: 0.15,
-            emissive: new THREE.Color("#ff1361"),
-            emissiveIntensity: 0.08
-          });
+          // Miles Morales: Preserve authentic UV textured suit and configure stylized PBR channels
+          if (mesh.material) {
+            const rawMat = mesh.material as THREE.MeshStandardMaterial;
+            const mat = rawMat.clone() as THREE.MeshStandardMaterial;
+            mesh.material = mat;
+
+            if (mat.name === "HEAD") {
+              // Main Suited Body with 1024x1024 texture atlas (chest spray spider, back spider, finger pads, side stripes)
+              mat.roughness = 0.42;
+              mat.metalness = 0.06;
+              if (mat.map) {
+                mat.map.colorSpace = THREE.SRGBColorSpace;
+                mat.map.needsUpdate = true;
+              }
+              mat.transparent = false;
+              mat.depthWrite = true;
+              mat.side = THREE.FrontSide;
+            } else if (mat.name === "HEAD.001") {
+              // Mask eye contour bezels and footwear accents (Spider-Verse vibrant crimson)
+              mat.color.set("#ff1361");
+              mat.roughness = 0.28;
+              mat.metalness = 0.12;
+              mat.emissive.set("#ff1361");
+              mat.emissiveIntensity = 0.35;
+              mat.transparent = false;
+              mat.depthWrite = true;
+              mat.side = THREE.FrontSide;
+            } else if (mat.name === "material_0") {
+              // Inner eye lenses (sharp, non-toy optical white with specular response)
+              mat.color.set("#ffffff");
+              mat.roughness = 0.16;
+              mat.metalness = 0.05;
+              mat.transparent = false;
+              mat.depthWrite = true;
+              mat.side = THREE.FrontSide;
+            }
+            mat.needsUpdate = true;
+          }
         } else if (avatarId === "civilian") {
           // Contemporary urban casual hoodie/windbreaker
           mesh.material = new THREE.MeshStandardMaterial({
@@ -167,7 +197,8 @@ function SkinnedMeshRenderer({
     let targetActionName = config.animationClips.idle.toLowerCase();
 
     if (!isGrounded) {
-      targetActionName = config.animationClips.run.toLowerCase(); // airborne dynamic pose
+      const jumpClip = config.animationClips.jump ? config.animationClips.jump.toLowerCase() : "jump";
+      targetActionName = actions[jumpClip] ? jumpClip : config.animationClips.run.toLowerCase();
     } else if (isMoving) {
       targetActionName = isRunning
         ? config.animationClips.run.toLowerCase()
@@ -184,8 +215,12 @@ function SkinnedMeshRenderer({
         nextAction.setEffectiveTimeScale(1);
         nextAction.setEffectiveWeight(1);
 
+        if (targetActionName === "jump") {
+          nextAction.setLoop(THREE.LoopRepeat, Infinity);
+        }
+
         if (prevAction) {
-          nextAction.crossFadeFrom(prevAction, 0.2, true);
+          nextAction.crossFadeFrom(prevAction, 0.18, true);
         }
         nextAction.play();
         activeActionName.current = targetActionName;
@@ -212,22 +247,7 @@ function SkinnedMeshRenderer({
 
   return (
     <group ref={groupRef} position={config.visualRootOffset}>
-      {/* Spider Emblem Overlay on Chest for Miles Morales */}
-      {avatarId === "miles-morales" && (
-        <group position={[0, 1.25, 0.16]}>
-          <mesh>
-            <planeGeometry args={[0.22, 0.24]} />
-            <meshBasicMaterial
-              color="#ff1361"
-              transparent
-              opacity={0.95}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-        </group>
-      )}
-
-      {/* Ability Shockwave Ring */}
+      {/* Ability Shockwave Aura Ring */}
       {abilityActive && (
         <mesh position={[0, 1.0, 0]}>
           <sphereGeometry args={[1.6, 16, 16]} />
@@ -247,5 +267,6 @@ function SkinnedMeshRenderer({
 }
 
 // Preload the rigged GLB models
+useGLTF.preload("/models/miles_morales.glb");
 useGLTF.preload("/models/civilian_xbot.glb");
 useGLTF.preload("/models/soldier.glb");

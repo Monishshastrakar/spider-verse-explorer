@@ -67,10 +67,10 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     universeLabel: "Earth-1610",
     continuityVersion: "Across the Spider-Verse (2023)",
     modelStatus: "rigged-glb",
-    modelUrl: "/models/civilian_xbot.glb", // Skinned with Miles Morales suit shader & textures
-    attribution: "Three.js Skinned Rig with Custom Miles Morales Suit Materials",
-    license: "Educational / MIT",
-    scale: [0.94, 0.94, 0.94], // Lean teenage proportions (1.70m)
+    modelUrl: "/models/miles_morales.glb",
+    attribution: "IIM Digital School Diimensions Project (Ayman Benammour et al.) / Authentic Skinned Rig",
+    license: "Educational / Non-Commercial",
+    scale: [1, 1, 1], // Height: 1.644m, exact 1:1 film proportions
     visualRootOffset: [0, 0, 0],
     facingCorrection: 0,
     cameraTargetHeight: 1.2,
@@ -78,14 +78,15 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     animationClips: {
       idle: "idle",
       walk: "walk",
-      run: "run"
+      run: "run",
+      jump: "jump"
     },
     portrait: "/images/characters/miles-morales.svg",
-    primaryColor: "#0a0a0f",
+    primaryColor: "#0d0d12",
     accentColor: "#ff1361",
     abilityName: "Bio-Electric Venom Blast",
     abilityDescription: "Release a high-voltage bio-electric shockwave through your fingertips.",
-    artDirectionNotes: "Matte black compression suit, red spray-paint emblem, red flank striping, white lenses."
+    artDirectionNotes: "Matte black compression suit with spray-paint chest spider, red back emblem, red flank racing stripes, sharp white mask lenses, and red eye contours."
   },
   "peter-parker": {
     id: "char-peter",
