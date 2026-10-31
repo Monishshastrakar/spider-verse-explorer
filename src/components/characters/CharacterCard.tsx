@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Character } from "@/types/character";
 import { MultiverseJumpLink } from "@/components/motion/MultiverseTransition";
-import { Sparkles, ArrowRight, Zap, Shield } from "lucide-react";
+import { ArrowRight, ImageOff } from "lucide-react";
 
 interface CharacterCardProps {
   character: Character;
@@ -19,29 +19,41 @@ export function CharacterCard({
 }: CharacterCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const canTiltRef = useRef(false);
 
+  useEffect(() => {
+    // Only enable 3D pointer tilt on devices with a fine pointer (desktop mouse)
+    if (typeof window !== "undefined") {
+      canTiltRef.current = window.matchMedia("(pointer: fine)").matches && !reducedMotion;
+    }
+  }, [reducedMotion]);
+
+  // Pointer tilt without React state re-renders for 60fps performance
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (reducedMotion || !cardRef.current) return;
+    if (!canTiltRef.current || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Subtle 3D tilt
-    const rotX = ((y - centerY) / centerY) * -8;
-    const rotY = ((x - centerX) / centerX) * 8;
-    setRotateX(rotX);
-    setRotateY(rotY);
+    const rotX = ((y - centerY) / centerY) * -7;
+    const rotY = ((x - centerX) / centerX) * 7;
+
+    cardRef.current.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
     setIsHovered(false);
+    if (cardRef.current) {
+      cardRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    }
   };
 
   const targetUrl = `/characters/${character.slug}${
@@ -49,27 +61,23 @@ export function CharacterCard({
   }`;
 
   return (
-    <motion.div
+    <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{
-        transform:
-          !reducedMotion && isHovered
-            ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
-            : "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
-        transition: "transform 0.15s ease-out",
-        borderColor: isHovered ? character.accentColor : "#1c1c2b",
-        boxShadow: isHovered
-          ? `6px 6px 0px ${character.accentColor}`
-          : "4px 4px 0px #000000",
-      }}
-      className={`group relative flex flex-col justify-between bg-[#0e0e16] border-2 rounded-2xl overflow-hidden transition-all duration-300 focus-within:ring-2 focus-within:ring-[#00e5ff] ${
+      className={`group relative flex flex-col justify-between bg-[#0e0e16] border-2 rounded-2xl overflow-hidden transition-all duration-200 focus-within:ring-2 focus-within:ring-[#00e5ff] will-change-transform ${
         isHovered
           ? "border-opacity-100 shadow-[6px_6px_0px_#000]"
           : "border-[#1c1c2b] shadow-[4px_4px_0px_#000]"
       }`}
+      style={{
+        borderColor: isHovered ? character.accentColor : "#1c1c2b",
+        boxShadow: isHovered
+          ? `6px 6px 0px ${character.accentColor}`
+          : "4px 4px 0px #000000",
+        transition: "transform 0.15s ease-out, border-color 0.2s ease, box-shadow 0.2s ease",
+      }}
     >
       {/* Top Banner with Universe Label & Halftone Overlay */}
       <div className="relative p-5 pb-3">
@@ -91,12 +99,26 @@ export function CharacterCard({
           </span>
         </div>
 
-        {/* Character Illustration Frame */}
+        {/* Character Illustration Frame with Custom Focal Point */}
         <div className="relative mt-4 mb-2 mx-auto w-full aspect-square max-w-[240px] rounded-xl overflow-hidden border border-white/10 bg-[#07070a] flex items-center justify-center group-hover:border-white/30 transition-colors">
-          <div
-            className="w-full h-full transform transition-transform duration-300 group-hover:scale-105"
-            dangerouslySetInnerHTML={{ __html: character.image }}
-          />
+          {!imgError ? (
+            <img
+              src={character.image}
+              alt={character.imageAlt}
+              width={240}
+              height={240}
+              loading="lazy"
+              decoding="async"
+              style={{ objectPosition: character.objectPosition || "center 35%" }}
+              className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center text-gray-500 p-4 text-center">
+              <ImageOff className="w-8 h-8 mb-2 opacity-50" />
+              <span className="text-xs font-mono">{character.name}</span>
+            </div>
+          )}
 
           {/* Glitch Scanline Effect on Hover */}
           {isHovered && !reducedMotion && (
@@ -148,6 +170,6 @@ export function CharacterCard({
           </MultiverseJumpLink>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -16,8 +16,9 @@ export interface Character {
   shortDescription: string;
   biography: string;
   traits: string[];
-  image: string; // High-detail SVG data string or asset path
+  image: string; // High-detail SVG asset path
   imageAlt: string;
+  objectPosition?: string;
   accentColor: string;
   secondaryColor: string;
   quote: string;

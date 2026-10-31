@@ -1,7 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useRef } from "react";
-import { useRouter } from "next/navigation";
+import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Character } from "@/types/character";
 
@@ -23,10 +23,23 @@ export function useMultiverseTransition() {
 
 export function MultiverseTransitionProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const reducedMotion = useReducedMotion();
   const [isJumping, setIsJumping] = useState(false);
   const [activeCharacter, setActiveCharacter] = useState<Character | null>(null);
   const isNavigatingRef = useRef(false);
+
+  // When pathname changes (navigation complete), smoothly dismiss the portal
+  useEffect(() => {
+    if (isJumping) {
+      const dismissTimer = setTimeout(() => {
+        setIsJumping(false);
+        setActiveCharacter(null);
+        isNavigatingRef.current = false;
+      }, 150);
+      return () => clearTimeout(dismissTimer);
+    }
+  }, [pathname, isJumping]);
 
   const triggerJump = useCallback(
     (character: Character, targetUrl: string) => {
@@ -44,21 +57,26 @@ export function MultiverseTransitionProvider({ children }: { children: React.Rea
           setIsJumping(false);
           setActiveCharacter(null);
           isNavigatingRef.current = false;
-        }, 150);
+        }, 100);
         return;
       }
 
-      // Step 1 & 2: Portal expands and covers screen (approx 450ms)
-      setTimeout(() => {
+      // Step 1: Expand portal (380ms) and navigate
+      const navTimer = setTimeout(() => {
         router.push(targetUrl);
-      }, 420);
+      }, 380);
 
-      // Step 3 & 4: Reveal target page and reset transition
-      setTimeout(() => {
+      // Safety fallback in case pathname doesn't change (e.g. error or same page)
+      const safetyTimer = setTimeout(() => {
         setIsJumping(false);
         setActiveCharacter(null);
         isNavigatingRef.current = false;
-      }, 850);
+      }, 1200);
+
+      return () => {
+        clearTimeout(navTimer);
+        clearTimeout(safetyTimer);
+      };
     },
     [router, reducedMotion]
   );

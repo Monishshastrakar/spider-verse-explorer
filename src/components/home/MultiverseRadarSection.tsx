@@ -68,9 +68,14 @@ export function MultiverseRadarSection() {
               {/* Left Side: Avatar Illustration */}
               <div className="md:col-span-5 flex flex-col items-center text-center">
                 <div className="w-52 h-52 rounded-2xl overflow-hidden bg-[#07070a] border-2 border-white/10 shadow-[4px_4px_0px_#000] p-2 flex items-center justify-center">
-                  <div
-                    className="w-full h-full transform transition-transform hover:scale-105"
-                    dangerouslySetInnerHTML={{ __html: activeChar.image }}
+                  <img
+                    src={activeChar.image}
+                    alt={activeChar.imageAlt}
+                    width={208}
+                    height={208}
+                    loading="lazy"
+                    style={{ objectPosition: activeChar.objectPosition || "center 35%" }}
+                    className="w-full h-full object-cover rounded-xl transform transition-transform hover:scale-105"
                   />
                 </div>
                 <span

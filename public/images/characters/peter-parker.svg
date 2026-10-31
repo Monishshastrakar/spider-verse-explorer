@@ -1,0 +1,103 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Peter B. Parker in classic red and blue Spider-Man suit">
+  <defs>
+    <radialGradient id="pp-bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#b71c1c" stop-opacity="0.35"/>
+      <stop offset="70%" stop-color="#0e1524" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#060810" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="pp-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e52521"/>
+      <stop offset="60%" stop-color="#c62828"/>
+      <stop offset="100%" stop-color="#8e0000"/>
+    </linearGradient>
+    <linearGradient id="pp-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1976d2"/>
+      <stop offset="70%" stop-color="#0d47a1"/>
+      <stop offset="100%" stop-color="#0a192f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="24" fill="url(#pp-bg)"/>
+
+  <!-- Vintage Comic Halftone Grid -->
+  <g fill="#1976d2" opacity="0.15">
+    <circle cx="40" cy="40" r="2"/><circle cx="80" cy="40" r="2"/><circle cx="120" cy="40" r="2"/>
+    <circle cx="280" cy="40" r="2"/><circle cx="320" cy="40" r="2"/><circle cx="360" cy="40" r="2"/>
+    <circle cx="40" cy="80" r="2"/><circle cx="360" cy="80" r="2"/>
+    <circle cx="40" cy="360" r="2"/><circle cx="360" cy="360" r="2"/>
+  </g>
+
+  <!-- Webbing Backdrop -->
+  <g stroke="#e52521" stroke-width="1" opacity="0.2">
+    <path d="M200 30 L200 370"/>
+    <path d="M30 200 L370 200"/>
+    <path d="M70 70 L330 330"/>
+    <path d="M70 330 L330 70"/>
+    <circle cx="200" cy="200" r="60" fill="none"/>
+    <circle cx="200" cy="200" r="120" fill="none"/>
+    <circle cx="200" cy="200" r="170" fill="none" stroke-dasharray="4 4"/>
+  </g>
+
+  <!-- Shoulders: Classic Red Center with Blue Sides -->
+  <g>
+    <!-- Blue Shoulder Sides -->
+    <path d="M80 380 C95 310, 130 270, 160 265 L160 380 Z" fill="url(#pp-blue)" stroke="#000" stroke-width="3"/>
+    <path d="M320 380 C305 310, 270 270, 240 265 L240 380 Z" fill="url(#pp-blue)" stroke="#000" stroke-width="3"/>
+    <!-- Red Center Chest -->
+    <path d="M158 265 L242 265 L242 380 L158 380 Z" fill="url(#pp-red)" stroke="#000" stroke-width="3"/>
+    <!-- Classic Black Chest Spider -->
+    <g fill="#000000">
+      <ellipse cx="200" cy="320" rx="8" ry="14"/>
+      <circle cx="200" cy="306" r="5"/>
+      <path d="M196 312 L175 300 L160 312 M196 318 L170 320 L155 332 M196 324 L172 334 L162 355 M196 328 L178 348 L170 370" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M204 312 L225 300 L240 312 M204 318 L230 320 L245 332 M204 324 L228 334 L238 355 M204 328 L222 348 L230 370" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Neck -->
+  <path d="M172 230 L172 270 L228 270 L228 230 Z" fill="url(#pp-red)"/>
+  <path d="M172 245 L228 245 M172 260 L228 260" stroke="#000000" stroke-width="2" opacity="0.5"/>
+
+  <!-- Head Base -->
+  <ellipse cx="200" cy="175" rx="74" ry="94" fill="url(#pp-red)" stroke="#0a0a0f" stroke-width="5"/>
+
+  <!-- Classic Webbing on Mask -->
+  <g stroke="#000000" stroke-width="2.5" opacity="0.65" fill="none">
+    <!-- Center Web Hub (between eyes) -->
+    <circle cx="200" cy="165" r="3" fill="#000"/>
+    <!-- Radial Lines -->
+    <path d="M200 82 L200 268"/>
+    <path d="M200 165 L140 105"/>
+    <path d="M200 165 L260 105"/>
+    <path d="M200 165 L130 165"/>
+    <path d="M200 165 L270 165"/>
+    <path d="M200 165 L145 225"/>
+    <path d="M200 165 L255 225"/>
+    <!-- Connecting Concentric Web Arcs -->
+    <path d="M170 145 Q200 135 230 145"/>
+    <path d="M150 120 Q200 105 250 120"/>
+    <path d="M140 185 Q200 200 260 185"/>
+    <path d="M150 215 Q200 230 250 215"/>
+    <path d="M165 245 Q200 255 235 245"/>
+  </g>
+
+  <!-- Classic Peter Parker Eye Lenses (Thick Black Border, White Lens) -->
+  <g>
+    <!-- Left Eye Lens -->
+    <path d="M138 145 C142 120, 172 118, 192 140 C188 172, 166 190, 144 180 C138 170, 136 156, 138 145 Z" fill="#ffffff" stroke="#000000" stroke-width="8"/>
+    <path d="M146 152 Q168 138 184 148" stroke="#b0bec5" stroke-width="2.5" opacity="0.6" fill="none"/>
+
+    <!-- Right Eye Lens -->
+    <path d="M262 145 C258 120, 228 118, 208 140 C212 172, 234 190, 256 180 C262 170, 264 156, 262 145 Z" fill="#ffffff" stroke="#000000" stroke-width="8"/>
+    <path d="M254 152 Q232 138 216 148" stroke="#b0bec5" stroke-width="2.5" opacity="0.6" fill="none"/>
+  </g>
+
+  <!-- Subtle Veteran Wrinkle / Fatigue Crease under Eyes -->
+  <path d="M152 195 Q165 198 178 194" stroke="#8e0000" stroke-width="2" fill="none" opacity="0.6"/>
+  <path d="M248 195 Q235 198 222 194" stroke="#8e0000" stroke-width="2" fill="none" opacity="0.6"/>
+
+  <!-- Comic Outer Border -->
+  <rect x="8" y="8" width="384" height="384" rx="20" fill="none" stroke="#1976d2" stroke-width="2" opacity="0.3"/>
+  <rect x="4" y="4" width="392" height="392" rx="22" fill="none" stroke="#000000" stroke-width="3"/>
+</svg>

@@ -75,9 +75,14 @@ export function CharacterDetailView({
               <div className="absolute inset-0 comic-halftone opacity-25 pointer-events-none" />
 
               <div className="relative z-10 w-full aspect-square max-w-[340px] mx-auto rounded-2xl overflow-hidden border-2 border-white/10 bg-[#07070a] flex items-center justify-center">
-                <div
-                  className="w-full h-full transform transition-transform duration-500 hover:scale-105"
-                  dangerouslySetInnerHTML={{ __html: character.image }}
+                <img
+                  src={character.image}
+                  alt={character.imageAlt}
+                  width={340}
+                  height={340}
+                  loading="eager"
+                  style={{ objectPosition: character.objectPosition || "center 35%" }}
+                  className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105"
                 />
               </div>
 

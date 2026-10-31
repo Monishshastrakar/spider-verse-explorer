@@ -1,0 +1,100 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Miles Morales in black and red Spider-Man suit with bio-electric energy">
+  <defs>
+    <radialGradient id="mm-bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ff1361" stop-opacity="0.3"/>
+      <stop offset="70%" stop-color="#101018" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#06060a" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="mm-suit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f1f28"/>
+      <stop offset="60%" stop-color="#0e0e14"/>
+      <stop offset="100%" stop-color="#08080c"/>
+    </linearGradient>
+    <filter id="mm-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="24" fill="url(#mm-bg)"/>
+  
+  <!-- Subtle Halftone Dots -->
+  <g fill="#ff1361" opacity="0.12">
+    <circle cx="40" cy="40" r="2"/><circle cx="80" cy="40" r="2"/><circle cx="120" cy="40" r="2"/>
+    <circle cx="280" cy="40" r="2"/><circle cx="320" cy="40" r="2"/><circle cx="360" cy="40" r="2"/>
+    <circle cx="40" cy="80" r="2"/><circle cx="360" cy="80" r="2"/>
+    <circle cx="40" cy="320" r="2"/><circle cx="80" cy="360" r="2"/><circle cx="320" cy="360" r="2"/><circle cx="360" cy="320" r="2"/>
+  </g>
+
+  <!-- Spider-Verse Dimension Webbing Background -->
+  <g stroke="#ff1361" stroke-width="1" opacity="0.25">
+    <path d="M200 40 L200 360"/>
+    <path d="M40 200 L360 200"/>
+    <path d="M80 80 L320 320"/>
+    <path d="M80 320 L320 80"/>
+    <circle cx="200" cy="200" r="70" fill="none"/>
+    <circle cx="200" cy="200" r="130" fill="none" stroke-dasharray="6 6"/>
+  </g>
+
+  <!-- Shoulders / Torso -->
+  <path d="M90 380 C110 300, 150 260, 200 260 C250 260, 290 300, 310 380 Z" fill="url(#mm-suit)" stroke="#000000" stroke-width="4"/>
+  <!-- Red Spray-Painted Chest Spider Emblem -->
+  <g fill="#e52521" stroke="#ff1361" stroke-width="1.5">
+    <!-- Spider Body -->
+    <ellipse cx="200" cy="320" rx="9" ry="16"/>
+    <circle cx="200" cy="304" r="6"/>
+    <!-- Spider Legs (Spray paint angular jagged style) -->
+    <path d="M195 310 L170 295 L150 310 M195 318 L165 318 L145 330 M195 324 L168 335 L152 355 M195 330 L175 348 L165 370" fill="none" stroke="#e52521" stroke-width="4" stroke-linecap="round"/>
+    <path d="M205 310 L230 295 L250 310 M205 318 L235 318 L255 330 M205 324 L232 335 L248 355 M205 330 L225 348 L235 370" fill="none" stroke="#e52521" stroke-width="4" stroke-linecap="round"/>
+    <!-- Spray Paint Drips -->
+    <circle cx="165" cy="378" r="2.5" fill="#e52521"/>
+    <circle cx="235" cy="378" r="2.5" fill="#e52521"/>
+  </g>
+
+  <!-- Neck -->
+  <path d="M172 230 L172 270 L228 270 L228 230 Z" fill="#14141d"/>
+
+  <!-- Head Base -->
+  <ellipse cx="200" cy="175" rx="72" ry="92" fill="url(#mm-suit)" stroke="#0a0a0f" stroke-width="5"/>
+
+  <!-- Webbing on Face -->
+  <g stroke="#000000" stroke-width="2.5" opacity="0.6" fill="none">
+    <path d="M200 90 L200 260"/>
+    <path d="M200 160 Q160 155 132 145"/>
+    <path d="M200 160 Q240 155 268 145"/>
+    <path d="M200 190 Q160 195 136 210"/>
+    <path d="M200 190 Q240 195 264 210"/>
+    <path d="M200 225 Q170 232 150 248"/>
+    <path d="M200 225 Q230 232 250 248"/>
+  </g>
+
+  <!-- Red Accent Trim Lines on Mask -->
+  <path d="M140 115 C160 100, 240 100, 260 115" fill="none" stroke="#ff1361" stroke-width="2" opacity="0.4"/>
+  <path d="M135 220 C160 250, 240 250, 265 220" fill="none" stroke="#ff1361" stroke-width="2" opacity="0.4"/>
+
+  <!-- Miles Morales Signature Angular Lenses with Red Outer Rim -->
+  <g filter="url(#mm-glow)">
+    <!-- Left Lens Outer Red Rim -->
+    <path d="M145 152 C145 132, 168 128, 188 145 C185 168, 170 186, 149 184 C145 178, 145 162, 145 152 Z" fill="#ffffff" stroke="#e52521" stroke-width="6"/>
+    <!-- Left Lens Inner Shading -->
+    <path d="M152 155 L178 148" stroke="#00e5ff" stroke-width="2" opacity="0.7"/>
+
+    <!-- Right Lens Outer Red Rim -->
+    <path d="M255 152 C255 132, 232 128, 212 145 C215 168, 230 186, 251 184 C255 178, 255 162, 255 152 Z" fill="#ffffff" stroke="#e52521" stroke-width="6"/>
+    <!-- Right Lens Inner Shading -->
+    <path d="M248 155 L222 148" stroke="#00e5ff" stroke-width="2" opacity="0.7"/>
+  </g>
+
+  <!-- Bio-Electric Venom Blast Sparks (Yellow/Cyan) -->
+  <g stroke="#ffe600" stroke-width="2.5" stroke-linecap="round" fill="none" filter="url(#mm-glow)">
+    <path d="M110 130 L120 142 L114 148 L128 162"/>
+    <path d="M290 130 L280 142 L286 148 L272 162"/>
+    <circle cx="112" cy="126" r="2" fill="#ffe600"/>
+    <circle cx="288" cy="126" r="2" fill="#00e5ff"/>
+  </g>
+
+  <!-- Comic Outer Border -->
+  <rect x="8" y="8" width="384" height="384" rx="20" fill="none" stroke="#ff1361" stroke-width="2" opacity="0.3"/>
+  <rect x="4" y="4" width="392" height="392" rx="22" fill="none" stroke="#000000" stroke-width="3"/>
+</svg>

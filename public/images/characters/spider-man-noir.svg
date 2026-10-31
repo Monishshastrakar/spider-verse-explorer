@@ -1,0 +1,93 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spider-Man Noir in 1933 trench coat, tilted fedora hat, and pilot goggles">
+  <defs>
+    <radialGradient id="sn-bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#546e7a" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#182026" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#080c10" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="sn-trench" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#263238"/>
+      <stop offset="70%" stop-color="#1b242a"/>
+      <stop offset="100%" stop-color="#10171a"/>
+    </linearGradient>
+    <linearGradient id="sn-brass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe082"/>
+      <stop offset="60%" stop-color="#ffb300"/>
+      <stop offset="100%" stop-color="#b28704"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="24" fill="url(#sn-bg)"/>
+
+  <!-- Dramatic 1930s Film Noir Shadow Blinds (Venetian Blinds Lighting) -->
+  <g fill="#000000" opacity="0.35">
+    <rect x="0" y="30" width="400" height="25" transform="rotate(-8 200 40)"/>
+    <rect x="0" y="85" width="400" height="25" transform="rotate(-8 200 95)"/>
+    <rect x="0" y="140" width="400" height="25" transform="rotate(-8 200 150)"/>
+    <rect x="0" y="195" width="400" height="25" transform="rotate(-8 200 205)"/>
+    <rect x="0" y="250" width="400" height="25" transform="rotate(-8 200 260)"/>
+    <rect x="0" y="305" width="400" height="25" transform="rotate(-8 200 315)"/>
+  </g>
+
+  <!-- High Upturned Trench Coat Lapels & Shoulders -->
+  <path d="M75 380 C95 285, 140 255, 200 255 C260 255, 305 285, 325 380 Z" fill="url(#sn-trench)" stroke="#000" stroke-width="4"/>
+  <!-- Sharp Pointed Trench Lapels Rising Up -->
+  <polygon points="120,250 155,330 115,360" fill="#1b242a" stroke="#000" stroke-width="3"/>
+  <polygon points="280,250 245,330 285,360" fill="#1b242a" stroke="#000" stroke-width="3"/>
+  <!-- Trench Buttons (Double Breasted) -->
+  <circle cx="170" cy="340" r="5" fill="#37474f" stroke="#000" stroke-width="1.5"/>
+  <circle cx="230" cy="340" r="5" fill="#37474f" stroke="#000" stroke-width="1.5"/>
+
+  <!-- Dark Leather Stitched Mask Base -->
+  <ellipse cx="200" cy="190" rx="66" ry="84" fill="#1b2226" stroke="#000" stroke-width="4"/>
+  <!-- Mask Stitch Seams -->
+  <path d="M200 135 L200 270" stroke="#37474f" stroke-width="2" stroke-dasharray="3 3"/>
+  <path d="M165 240 Q200 255 235 240" stroke="#37474f" stroke-width="1.5" stroke-dasharray="3 3" fill="none"/>
+
+  <!-- Aviator Brass Pilot Goggles with Stitched Strap -->
+  <!-- Leather Strap Across Head -->
+  <rect x="110" y="172" width="180" height="18" fill="#0d1215" stroke="#000" stroke-width="2"/>
+  <circle cx="120" cy="181" r="3" fill="#ffb300"/>
+  <circle cx="280" cy="181" r="3" fill="#ffb300"/>
+
+  <!-- Goggle Frames -->
+  <g>
+    <!-- Left Goggle -->
+    <circle cx="152" cy="182" r="30" fill="url(#sn-brass)" stroke="#000" stroke-width="4"/>
+    <circle cx="152" cy="182" r="22" fill="#37474f" stroke="#000" stroke-width="2"/>
+    <!-- Glass Lens Tint & Light Slits -->
+    <circle cx="152" cy="182" r="18" fill="#b0bec5" opacity="0.85"/>
+    <line x1="140" y1="172" x2="164" y2="192" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="146" y1="168" x2="158" y2="178" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Right Goggle -->
+    <circle cx="248" cy="182" r="30" fill="url(#sn-brass)" stroke="#000" stroke-width="4"/>
+    <circle cx="248" cy="182" r="22" fill="#37474f" stroke="#000" stroke-width="2"/>
+    <!-- Glass Lens Tint & Light Slits -->
+    <circle cx="248" cy="182" r="18" fill="#b0bec5" opacity="0.85"/>
+    <line x1="236" y1="172" x2="260" y2="192" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="242" y1="168" x2="254" y2="178" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Center Brass Bridge -->
+    <rect x="180" y="178" width="40" height="8" rx="2" fill="url(#sn-brass)" stroke="#000" stroke-width="2"/>
+  </g>
+
+  <!-- Iconic 1933 Fedora Hat (Tilted over Brow) -->
+  <g>
+    <!-- Hat Crown -->
+    <path d="M125 125 C120 60, 150 40, 200 42 C250 40, 280 60, 275 125 Z" fill="#141a1e" stroke="#000" stroke-width="4"/>
+    <!-- Crown Crease / Pinch -->
+    <path d="M170 55 C190 70, 210 70, 230 55" fill="none" stroke="#0d1114" stroke-width="4"/>
+    <!-- Dark Silk Hatband -->
+    <path d="M125 122 Q200 135 275 122 L275 110 Q200 122 125 110 Z" fill="#263238" stroke="#000" stroke-width="2"/>
+    <!-- Hat Brim (Wide and Curved) -->
+    <path d="M80 130 Q200 160 320 130 Q200 95 80 130 Z" fill="#1c2428" stroke="#000" stroke-width="4"/>
+    <!-- Brim Underside Shadow -->
+    <path d="M90 132 Q200 162 310 132 Q200 148 90 132 Z" fill="#0b0e10" opacity="0.8"/>
+  </g>
+
+  <!-- Comic Outer Frame (Noir Silver Rim) -->
+  <rect x="8" y="8" width="384" height="384" rx="20" fill="none" stroke="#cfd8dc" stroke-width="2" opacity="0.4"/>
+  <rect x="4" y="4" width="392" height="392" rx="22" fill="none" stroke="#000000" stroke-width="3"/>
+</svg>

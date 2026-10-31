@@ -2,10 +2,21 @@
 
 import React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { AnimatedWeb } from "@/components/graphics/AnimatedWeb";
-import { ArrowRight, Compass, Sparkles, Zap } from "lucide-react";
+import { MultiversePortalFallback } from "@/components/graphics/MultiversePortal3D";
+import { ArrowRight, Compass, Sparkles } from "lucide-react";
 import { CHARACTERS } from "@/data/characters";
+
+// Dynamically load 3D Multiverse Portal to optimize initial load time
+const MultiversePortal3D = dynamic(
+  () => import("@/components/graphics/MultiversePortal3D"),
+  {
+    ssr: false,
+    loading: () => <MultiversePortalFallback className="absolute inset-0 z-0" />,
+  }
+);
 
 export function HeroSection() {
   const reducedMotion = useReducedMotion();
@@ -16,13 +27,18 @@ export function HeroSection() {
       className="relative min-h-[92vh] flex items-center justify-center overflow-hidden pt-28 pb-20 px-4"
       aria-label="Hero section: One Multiverse. Infinite Spider-People."
     >
+      {/* 3D Multiverse Portal (Dynamic Three.js layer) */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none opacity-70">
+        <MultiversePortal3D className="w-full h-full" />
+      </div>
+
       {/* Background Interactive Spider Web Canvas */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
         <AnimatedWeb particleColor="#ff1361" lineColor="#00e5ff" interactive={true} />
       </div>
 
       {/* Radial Comic Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#07070a]/70 to-[#07070a] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#07070a]/60 to-[#07070a] pointer-events-none z-0" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff1361]/10 rounded-full blur-[140px] pointer-events-none z-0" />
       <div className="absolute top-1/3 left-1/3 -translate-x-1/2 w-[450px] h-[450px] bg-[#00e5ff]/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
@@ -85,7 +101,7 @@ export function HeroSection() {
           </a>
         </motion.div>
 
-        {/* Layered Floating Comic Preview Panels */}
+        {/* Layered Floating Comic Preview Panels with Custom Focal Point */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -105,9 +121,14 @@ export function HeroSection() {
                   }}
                 >
                   <div className="w-full aspect-square rounded-xl overflow-hidden bg-[#07070a] border border-white/10 mb-2.5">
-                    <div
-                      className="w-full h-full transform transition-transform group-hover:scale-110"
-                      dangerouslySetInnerHTML={{ __html: char.image }}
+                    <img
+                      src={char.image}
+                      alt={char.imageAlt}
+                      width={180}
+                      height={180}
+                      loading="lazy"
+                      style={{ objectPosition: char.objectPosition || "center 35%" }}
+                      className="w-full h-full object-cover transform transition-transform group-hover:scale-110"
                     />
                   </div>
                   <div className="text-left">
