@@ -334,45 +334,7 @@ function SkinnedMeshRenderer({
 
   return (
     <group ref={groupRef} position={config.visualRootOffset}>
-      {/* Gwen Volumetric 3D Hood */}
-      {avatarId === "gwen-stacy" && (
-        <group position={[0, 1.48, -0.04]}>
-          <mesh>
-            <sphereGeometry args={[0.24, 24, 24, 0, Math.PI * 2, 0, Math.PI * 0.72]} />
-            <meshStandardMaterial color="#f5f5f7" roughness={0.5} side={THREE.DoubleSide} />
-          </mesh>
-          <mesh position={[0, -0.04, 0.04]} rotation={[0.25, 0, 0]}>
-            <torusGeometry args={[0.22, 0.035, 16, 32]} />
-            <meshStandardMaterial color="#00e5ff" roughness={0.3} emissive="#00e5ff" emissiveIntensity={0.2} />
-          </mesh>
-        </group>
-      )}
 
-      {/* Spider-Man Noir Fedora & Trench Collar */}
-      {avatarId === "spider-man-noir" && (
-        <group position={[0, 1.63, 0]}>
-          <mesh>
-            <cylinderGeometry args={[0.3, 0.3, 0.02, 24]} />
-            <meshStandardMaterial color="#1a1a1e" roughness={0.8} />
-          </mesh>
-          <mesh position={[0, 0.08, 0]}>
-            <cylinderGeometry args={[0.18, 0.2, 0.14, 24]} />
-            <meshStandardMaterial color="#1a1a1e" roughness={0.8} />
-          </mesh>
-        </group>
-      )}
-
-      {/* Hobie Brown Chrome Spiked Mohawk */}
-      {avatarId === "hobie-brown" && (
-        <group position={[0, 1.63, 0]}>
-          {[-0.08, -0.04, 0, 0.04, 0.08].map((z, idx) => (
-            <mesh key={idx} position={[0, 0.04, z]}>
-              <coneGeometry args={[0.025, 0.08, 12]} />
-              <meshStandardMaterial color="#e0e0e0" metalness={0.9} roughness={0.2} />
-            </mesh>
-          ))}
-        </group>
-      )}
 
       {/* Ability Shockwave Aura Ring */}
       {abilityActive && (

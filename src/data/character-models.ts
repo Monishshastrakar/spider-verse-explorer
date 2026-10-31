@@ -95,19 +95,19 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     alias: "Spider-Man",
     universeLabel: "Earth-616",
     continuityVersion: "Into / Across the Spider-Verse",
-    modelStatus: "rigged-glb",
-    modelUrl: "/models/spiderman_classic.glb",
-    attribution: "Bespoke Classic Spider-Man Rig with Segmented Costume Meshes",
+    modelStatus: "verified-temporary",
+    modelUrl: null,
+    attribution: "Bespoke Classic Spider-Man Humanoid Proxy",
     license: "Educational / MIT",
     scale: [1, 1, 1],
-    visualRootOffset: [0, 0, 1.65],
+    visualRootOffset: [0, 0, 0],
     facingCorrection: 0,
     cameraTargetHeight: 1.3,
     cameraDistanceOffset: 0.2,
     animationClips: {
-      idle: "Armature.002|mixamo.com|Layer0",
-      walk: "mixamo.com.002",
-      run: "mixamo.com"
+      idle: "idle",
+      walk: "walk",
+      run: "run"
     },
     portrait: "/images/characters/peter-parker.svg",
     primaryColor: "#d50000",
@@ -123,9 +123,9 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     alias: "Spider-Gwen / Ghost-Spider",
     universeLabel: "Earth-65",
     continuityVersion: "Across the Spider-Verse",
-    modelStatus: "rigged-glb",
-    modelUrl: "/models/miles_morales.glb", // Skinned to agile 65-bone athletic rig with Ghost-Spider suit
-    attribution: "IIM Digital School Base Skinned Rig / Custom Ghost-Spider Suit & Volumetric Hood",
+    modelStatus: "verified-temporary",
+    modelUrl: null,
+    attribution: "Bespoke Ghost-Spider Humanoid Proxy",
     license: "Educational / Non-Commercial",
     scale: [0.94, 0.96, 0.94],
     visualRootOffset: [0, 0, 0],
@@ -135,8 +135,7 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     animationClips: {
       idle: "idle",
       walk: "walk",
-      run: "run",
-      jump: "jump"
+      run: "run"
     },
     portrait: "/images/characters/gwen-stacy.svg",
     primaryColor: "#f5f5f7",
@@ -181,9 +180,9 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     alias: "Spider-Punk",
     universeLabel: "Earth-138",
     continuityVersion: "Across the Spider-Verse",
-    modelStatus: "rigged-glb",
-    modelUrl: "/models/miles_morales.glb",
-    attribution: "IIM Digital School Base Skinned Rig / Punk Styling",
+    modelStatus: "verified-temporary",
+    modelUrl: null,
+    attribution: "Bespoke Spider-Punk Humanoid Proxy",
     license: "Educational / Non-Commercial",
     scale: [1.02, 1.07, 1.02], // Tall, lanky frame
     visualRootOffset: [0, 0, 0],
@@ -193,8 +192,7 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     animationClips: {
       idle: "idle",
       walk: "walk",
-      run: "run",
-      jump: "jump"
+      run: "run"
     },
     portrait: "/images/characters/hobie-brown.svg",
     primaryColor: "#c62828",
@@ -210,9 +208,9 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     alias: "Spider-Man India",
     universeLabel: "Earth-50101",
     continuityVersion: "Across the Spider-Verse Film Design",
-    modelStatus: "rigged-glb",
-    modelUrl: "/models/miles_morales.glb",
-    attribution: "IIM Digital School Base Skinned Rig / Indian Suit Styling",
+    modelStatus: "verified-temporary",
+    modelUrl: null,
+    attribution: "Bespoke Spider-Man India Humanoid Proxy",
     license: "Educational / Non-Commercial",
     scale: [0.97, 0.98, 0.97],
     visualRootOffset: [0, 0, 0],
@@ -222,8 +220,7 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     animationClips: {
       idle: "idle",
       walk: "walk",
-      run: "run",
-      jump: "jump"
+      run: "run"
     },
     portrait: "/images/characters/pavitr-prabhakar.svg",
     primaryColor: "#d50000",
@@ -267,9 +264,9 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     alias: "Peter Parker",
     universeLabel: "Earth-90214",
     continuityVersion: "Into the Spider-Verse",
-    modelStatus: "rigged-glb",
-    modelUrl: "/models/miles_morales.glb",
-    attribution: "IIM Digital School Base Skinned Rig / Noir Chiaroscuro Styling",
+    modelStatus: "verified-temporary",
+    modelUrl: null,
+    attribution: "Bespoke Spider-Man Noir Humanoid Proxy",
     license: "Educational / Non-Commercial",
     scale: [1.02, 1.02, 1.02],
     visualRootOffset: [0, 0, 0],
@@ -279,8 +276,7 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     animationClips: {
       idle: "idle",
       walk: "walk",
-      run: "run",
-      jump: "jump"
+      run: "run"
     },
     portrait: "/images/characters/spider-man-noir.svg",
     primaryColor: "#1a1a1e",
