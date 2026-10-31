@@ -11,6 +11,7 @@ import {
   HelpCircle,
   ExternalLink,
   Keyboard,
+  Eye,
   X
 } from "lucide-react";
 
@@ -93,6 +94,16 @@ export function GameHUD() {
                 <span className="hidden sm:inline">Civilian Form</span>
               </button>
             )}
+
+            {/* Model Inspector Button */}
+            <Link
+              href="/multiverse/inspect"
+              className="p-2 sm:px-3 sm:py-2 bg-[#12121e] hover:bg-[#1e1e2e] text-gray-300 hover:text-white text-xs font-bold rounded-xl border border-[#2e2e42] shadow-[2px_2px_0px_#000] flex items-center gap-1.5"
+              title="Open Neutral Studio Character Inspector"
+            >
+              <Eye className="w-4 h-4 text-[#00e5ff]" />
+              <span className="hidden sm:inline">Inspect Models</span>
+            </Link>
 
             {/* Controls Guide Modal Button */}
             <button

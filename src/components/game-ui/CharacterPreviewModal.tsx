@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { MULTIVERSE_STATIONS } from "@/data/multiverse-stations";
+import { CHARACTER_MODELS } from "@/data/character-models";
 import { gameStore, type PlayableCharacterId } from "../game/GameState";
 import { Zap, X, Shield } from "lucide-react";
 
@@ -13,6 +14,7 @@ interface CharacterPreviewModalProps {
 
 export function CharacterPreviewModal({ stationSlug, onClose }: CharacterPreviewModalProps) {
   const station = MULTIVERSE_STATIONS.find((s) => s.slug === stationSlug);
+  const modelConfig = CHARACTER_MODELS[stationSlug];
   const transformButtonRef = useRef<HTMLButtonElement>(null);
 
   // Auto-focus the Transform button for keyboard navigation
@@ -85,6 +87,15 @@ export function CharacterPreviewModal({ stationSlug, onClose }: CharacterPreview
                 {station.universeLabel}
               </span>
               <span className="text-xs text-gray-400 font-bold">{station.alias}</span>
+              {modelConfig?.modelStatus === "rigged-glb" ? (
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold">
+                  RIGGED GLB
+                </span>
+              ) : (
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">
+                  VERIFIED TEMPORARY
+                </span>
+              )}
             </div>
 
             <h2

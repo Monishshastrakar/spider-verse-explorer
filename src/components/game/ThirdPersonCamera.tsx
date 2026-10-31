@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useThree, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { gameStore } from "./GameState";
+import { CAMERA_CONFIG } from "@/data/movement-config";
+import { CHARACTER_MODELS } from "@/data/character-models";
 
 interface ThirdPersonCameraProps {
   playerPos: THREE.Vector3;
@@ -13,21 +15,29 @@ interface ThirdPersonCameraProps {
 export function ThirdPersonCamera({ playerPos }: ThirdPersonCameraProps) {
   const { camera, gl } = useThree();
 
+  const [activeAvatar, setActiveAvatar] = useState(gameStore.state.activeAvatar);
+
   const yaw = useRef(0);
-  const pitch = useRef(0.35); // Initial comfortable overhead angle
+  const pitch = useRef(0.32); // Initial comfortable third-person angle
   const isDragging = useRef(false);
   const lastMouseX = useRef(0);
   const lastMouseY = useRef(0);
 
   const currentCamPos = useRef(new THREE.Vector3(0, 4, 8));
-  const currentLookAt = useRef(new THREE.Vector3(0, 1.2, 0));
+  const currentLookAt = useRef(new THREE.Vector3(0, 1.25, 0));
+
+  // Sync active avatar for character-specific camera framing
+  useEffect(() => {
+    return gameStore.subscribe(() => {
+      setActiveAvatar(gameStore.state.activeAvatar);
+    });
+  }, []);
 
   // Mouse drag listeners on the canvas
   useEffect(() => {
     const canvas = gl.domElement;
 
     const onMouseDown = (e: MouseEvent) => {
-      // Left click or middle click drag to rotate camera
       if (e.button === 0 || e.button === 2) {
         isDragging.current = true;
         lastMouseX.current = e.clientX;
@@ -43,12 +53,11 @@ export function ThirdPersonCamera({ playerPos }: ThirdPersonCameraProps) {
       lastMouseX.current = e.clientX;
       lastMouseY.current = e.clientY;
 
-      const sensitivity = 0.005;
-      yaw.current -= dx * sensitivity;
+      yaw.current -= dx * CAMERA_CONFIG.sensitivity;
       pitch.current = THREE.MathUtils.clamp(
-        pitch.current + dy * sensitivity,
-        0.05, // Minimum pitch (don't clip through ground)
-        1.15  // Maximum pitch (comfortable high overhead angle)
+        pitch.current + dy * CAMERA_CONFIG.sensitivity,
+        CAMERA_CONFIG.minPitch,
+        CAMERA_CONFIG.maxPitch
       );
 
       gameStore.state.cameraYaw = yaw.current;
@@ -59,7 +68,7 @@ export function ThirdPersonCamera({ playerPos }: ThirdPersonCameraProps) {
       isDragging.current = false;
     };
 
-    // Touch orbit listeners (when touching right half of screen)
+    // Mobile touch orbit listeners (touches on right half of screen)
     let touchId: number | null = null;
     let lastTouchX = 0;
     let lastTouchY = 0;
@@ -86,12 +95,12 @@ export function ThirdPersonCamera({ playerPos }: ThirdPersonCameraProps) {
           lastTouchX = touch.clientX;
           lastTouchY = touch.clientY;
 
-          const touchSensitivity = 0.007;
+          const touchSensitivity = CAMERA_CONFIG.sensitivity * 1.4;
           yaw.current -= dx * touchSensitivity;
           pitch.current = THREE.MathUtils.clamp(
             pitch.current + dy * touchSensitivity,
-            0.05,
-            1.15
+            CAMERA_CONFIG.minPitch,
+            CAMERA_CONFIG.maxPitch
           );
 
           gameStore.state.cameraYaw = yaw.current;
@@ -131,25 +140,28 @@ export function ThirdPersonCamera({ playerPos }: ThirdPersonCameraProps) {
 
   // Frame update: smooth follow camera
   useFrame((_, delta) => {
-    // Camera offset behind player based on yaw & pitch
-    const distance = 5.6;
-    const height = Math.sin(pitch.current) * distance;
-    const horizontalDist = Math.cos(pitch.current) * distance;
+    // Determine character specific framing
+    const isMech = activeAvatar === "peni-parker";
+    const targetDistance = isMech ? CAMERA_CONFIG.mechDistance : CAMERA_CONFIG.defaultDistance;
+    const heightOffset = isMech ? 1.6 : CAMERA_CONFIG.heightOffset;
+
+    const height = Math.sin(pitch.current) * targetDistance;
+    const horizontalDist = Math.cos(pitch.current) * targetDistance;
 
     const targetLookAt = new THREE.Vector3(
       playerPos.x,
-      playerPos.y + 1.25, // aim at player chest/head
+      playerPos.y + heightOffset,
       playerPos.z
     );
 
     const targetCamPos = new THREE.Vector3(
       playerPos.x - Math.sin(yaw.current) * horizontalDist,
-      playerPos.y + height + 0.8,
+      playerPos.y + height + 0.6,
       playerPos.z - Math.cos(yaw.current) * horizontalDist
     );
 
-    // Smooth lerp
-    const lerpFactor = THREE.MathUtils.clamp(delta * 8, 0, 1);
+    // Smooth camera interpolation
+    const lerpFactor = THREE.MathUtils.clamp(delta * 9, 0, 1);
     currentCamPos.current.lerp(targetCamPos, lerpFactor);
     currentLookAt.current.lerp(targetLookAt, lerpFactor);
 

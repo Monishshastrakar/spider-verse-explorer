@@ -4,8 +4,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { gameStore } from "./GameState";
-import { PlayerAvatar } from "./PlayerAvatar";
+import { SkinnedModelAvatar } from "./SkinnedModelAvatar";
 import { MULTIVERSE_STATIONS } from "@/data/multiverse-stations";
+import { MOVEMENT_CONFIG } from "@/data/movement-config";
 
 interface PlayerControllerProps {
   onPositionUpdate?: (pos: THREE.Vector3, yaw: number) => void;
@@ -14,15 +15,20 @@ interface PlayerControllerProps {
 export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
   const playerGroupRef = useRef<THREE.Group>(null);
 
-  // Position, velocity, and facing
-  const pos = useRef(new THREE.Vector3(0, 0, 3));
+  // Authoritative physical state
+  const pos = useRef(new THREE.Vector3(...MOVEMENT_CONFIG.respawnPosition));
   const vel = useRef(new THREE.Vector3(0, 0, 0));
   const facingYaw = useRef(0);
+
+  // Jump buffer & coyote timers
+  const jumpBufferTimer = useRef(0);
+  const coyoteTimer = useRef(0);
 
   // Movement animation states
   const [isMoving, setIsMoving] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [isGrounded, setIsGrounded] = useState(true);
+  const currentSpeed = useRef(0);
 
   // Store subscription
   const [activeAvatar, setActiveAvatar] = useState(gameStore.state.activeAvatar);
@@ -36,8 +42,7 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
     left: false,
     right: false,
     sprint: false,
-    jump: false,
-    interact: false
+    jump: false
   });
 
   // Sync with GameStore
@@ -49,10 +54,10 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
     });
   }, []);
 
-  // Keyboard listeners
+  // Keyboard event listeners
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't intercept if typing in an input
+      // Don't intercept when user is typing in forms or search fields
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
       if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") {
@@ -71,6 +76,7 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
         keys.current.sprint = true;
       } else if (e.key === " " || e.code === "Space") {
         keys.current.jump = true;
+        jumpBufferTimer.current = MOVEMENT_CONFIG.jumpBufferWindow;
         e.preventDefault();
       } else if (e.key === "e" || e.key === "E") {
         // Interact key pressed
@@ -93,16 +99,16 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
     };
 
     const handleBlur = () => {
-      // Clear held keys on blur to prevent stuck movement
+      // Clear all held inputs on window blur to prevent sticky movement
       keys.current = {
         forward: false,
         backward: false,
         left: false,
         right: false,
         sprint: false,
-        jump: false,
-        interact: false
+        jump: false
       };
+      jumpBufferTimer.current = 0;
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -116,20 +122,26 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
     };
   }, []);
 
-  // Frame update
+  // Authoritative physical simulation update
   useFrame((_, delta) => {
-    // Tick cooldowns
+    // Tick ability cooldowns
     gameStore.tickCooldown(delta);
 
-    // If movement is locked (e.g. preview modal open or transforming), freeze velocity
+    // Decrement jump buffer timer
+    if (jumpBufferTimer.current > 0) {
+      jumpBufferTimer.current = Math.max(0, jumpBufferTimer.current - delta);
+    }
+
+    // Freeze motion if input is locked (preview modal open or transforming)
     if (gameStore.state.inputLocked || gameStore.state.isTransforming) {
       vel.current.x = 0;
       vel.current.z = 0;
       setIsMoving(false);
+      currentSpeed.current = 0;
       return;
     }
 
-    // Direction input vector from Keyboard OR Mobile Joystick
+    // Calculate normalized 2D input
     let inputX = 0;
     let inputZ = 0;
 
@@ -138,7 +150,7 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
     if (keys.current.left) inputX -= 1;
     if (keys.current.right) inputX += 1;
 
-    // Merge mobile joystick input
+    // Mobile joystick integration
     const mobVec = gameStore.state.mobileMoveVector;
     if (Math.abs(mobVec.x) > 0.1 || Math.abs(mobVec.y) > 0.1) {
       inputX = mobVec.x;
@@ -146,67 +158,86 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
     }
 
     const inputLen = Math.sqrt(inputX * inputX + inputZ * inputZ);
-    const moving = inputLen > 0.1;
+    const moving = inputLen > 0.08;
     const running = (keys.current.sprint || gameStore.state.mobileSprintActive) && moving;
 
     setIsMoving(moving);
     setIsRunning(running);
 
-    // Calculate movement aligned to camera horizontal yaw
-    const cameraYaw = gameStore.state.cameraYaw;
-    const moveSpeed = running ? 7.5 : 4.0;
+    // Target locomotion speed from config
+    const targetSpeed = running ? MOVEMENT_CONFIG.runSpeed : MOVEMENT_CONFIG.walkSpeed;
 
+    // Smooth acceleration & deceleration
     if (moving) {
+      const accelRate = delta / MOVEMENT_CONFIG.accelerationTime;
+      currentSpeed.current = THREE.MathUtils.lerp(currentSpeed.current, targetSpeed, Math.min(1, accelRate * 6));
+
       const normX = inputX / (inputLen || 1);
       const normZ = inputZ / (inputLen || 1);
 
-      // Rotate input by camera yaw
+      // Rotate directional input by camera yaw
+      const cameraYaw = gameStore.state.cameraYaw;
       const worldMoveX = normX * Math.cos(cameraYaw) + normZ * Math.sin(cameraYaw);
       const worldMoveZ = -normX * Math.sin(cameraYaw) + normZ * Math.cos(cameraYaw);
 
-      vel.current.x = THREE.MathUtils.lerp(vel.current.x, worldMoveX * moveSpeed, delta * 12);
-      vel.current.z = THREE.MathUtils.lerp(vel.current.z, worldMoveZ * moveSpeed, delta * 12);
+      vel.current.x = worldMoveX * currentSpeed.current;
+      vel.current.z = worldMoveZ * currentSpeed.current;
 
-      // Smoothly rotate character towards movement direction
+      // Smoothly rotate character toward movement heading
       const targetAngle = Math.atan2(worldMoveX, worldMoveZ);
       let diff = targetAngle - facingYaw.current;
-      // Normalize angle diff to [-pi, pi]
-      diff = Math.atan2(Math.sin(diff), Math.cos(diff));
-      facingYaw.current += diff * Math.min(1, delta * 14);
+      diff = Math.atan2(Math.sin(diff), Math.cos(diff)); // normalize [-pi, pi]
+      facingYaw.current += diff * Math.min(1, delta * MOVEMENT_CONFIG.rotationSpeed);
     } else {
-      vel.current.x = THREE.MathUtils.lerp(vel.current.x, 0, delta * 14);
-      vel.current.z = THREE.MathUtils.lerp(vel.current.z, 0, delta * 14);
+      const decelRate = delta / MOVEMENT_CONFIG.decelerationTime;
+      currentSpeed.current = THREE.MathUtils.lerp(currentSpeed.current, 0, Math.min(1, decelRate * 8));
+      vel.current.x = THREE.MathUtils.lerp(vel.current.x, 0, Math.min(1, decelRate * 8));
+      vel.current.z = THREE.MathUtils.lerp(vel.current.z, 0, Math.min(1, decelRate * 8));
     }
 
-    // Gravity & Ground detection
-    const gravity = -20;
-    const jumpForce = 7.0;
-
-    const wantsJump = keys.current.jump || gameStore.state.mobileJumpRequested;
-    if (wantsJump && isGrounded) {
-      vel.current.y = jumpForce;
+    // Ground & Coyote Time Detection
+    const groundedNow = pos.current.y <= 0.001;
+    if (groundedNow) {
+      coyoteTimer.current = MOVEMENT_CONFIG.coyoteTimeWindow;
+      vel.current.y = 0;
+      pos.current.y = 0;
+      setIsGrounded(true);
+    } else {
+      coyoteTimer.current = Math.max(0, coyoteTimer.current - delta);
       setIsGrounded(false);
-      gameStore.setMobileJumpRequested(false);
     }
 
-    vel.current.y += gravity * delta;
+    // Jump handling: Check jump buffer or active key alongside coyote window
+    const hasJumpIntent = jumpBufferTimer.current > 0 || keys.current.jump || gameStore.state.mobileJumpRequested;
+    const canJump = coyoteTimer.current > 0;
+
+    if (hasJumpIntent && canJump) {
+      vel.current.y = MOVEMENT_CONFIG.jumpForce;
+      coyoteTimer.current = 0;
+      jumpBufferTimer.current = 0;
+      gameStore.setMobileJumpRequested(false);
+      setIsGrounded(false);
+    }
+
+    // Apply Gravity
+    vel.current.y -= MOVEMENT_CONFIG.gravity * delta;
     pos.current.y += vel.current.y * delta;
 
-    // Ground floor collision at y = 0
-    if (pos.current.y <= 0) {
+    // Ground floor clamp
+    if (pos.current.y < 0) {
       pos.current.y = 0;
       vel.current.y = 0;
       setIsGrounded(true);
     }
 
-    // Apply horizontal velocity
+    // Horizontal displacement
     pos.current.x += vel.current.x * delta;
     pos.current.z += vel.current.z * delta;
 
     // ==========================================
-    // Collision Obstacles & Boundaries
+    // Collisions with World Elements
     // ==========================================
-    // 1. Central Quantum Console (cylindrical obstacle at origin with radius 1.9m)
+    // 1. Central Console (Cylinder obstacle at origin, radius 1.9m)
     const distToCenter = Math.sqrt(pos.current.x * pos.current.x + pos.current.z * pos.current.z);
     if (distToCenter < 1.9) {
       const angle = Math.atan2(pos.current.z, pos.current.x);
@@ -214,7 +245,7 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
       pos.current.z = Math.sin(angle) * 1.9;
     }
 
-    // 2. Station Pedestal Collisions (radius 1.2m at each station)
+    // 2. Station Pedestal Boundaries (radius 1.25m per pedestal)
     MULTIVERSE_STATIONS.forEach((station) => {
       const dx = pos.current.x - station.position[0];
       const dz = pos.current.z - station.position[2];
@@ -226,33 +257,32 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
       }
     });
 
-    // 3. Citadel Outer Boundary Perimeter (Radius 13.5m)
-    const maxRadius = 13.5;
-    if (distToCenter > maxRadius) {
+    // 3. Citadel Outer Boundary
+    if (distToCenter > MOVEMENT_CONFIG.boundsRadius) {
       const angle = Math.atan2(pos.current.z, pos.current.x);
-      pos.current.x = Math.cos(angle) * maxRadius;
-      pos.current.z = Math.sin(angle) * maxRadius;
+      pos.current.x = Math.cos(angle) * MOVEMENT_CONFIG.boundsRadius;
+      pos.current.z = Math.sin(angle) * MOVEMENT_CONFIG.boundsRadius;
     }
 
-    // Safe respawn if player somehow leaves playable area
-    if (pos.current.y < -4 || distToCenter > 20) {
-      pos.current.set(0, 0, 3);
+    // Safe out-of-bounds recovery
+    if (pos.current.y < -4 || distToCenter > 22) {
+      pos.current.set(...MOVEMENT_CONFIG.respawnPosition);
       vel.current.set(0, 0, 0);
     }
 
-    // Update 3D mesh position & rotation
+    // Sync group position and rotation
     if (playerGroupRef.current) {
       playerGroupRef.current.position.copy(pos.current);
       playerGroupRef.current.rotation.y = facingYaw.current;
     }
 
-    // Notify Camera of player position
+    // Notify Camera Controller
     if (onPositionUpdate) {
       onPositionUpdate(pos.current, facingYaw.current);
     }
 
     // ==========================================
-    // Proximity Detection to Stations (with hysteresis)
+    // Station Proximity with Hysteresis
     // ==========================================
     let closestStation: string | null = null;
     let minDistance = 999;
@@ -263,13 +293,13 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
       const dist = Math.sqrt(dx * dx + dz * dz);
       if (dist < minDistance) {
         minDistance = dist;
-        if (dist <= 2.6) {
+        if (dist <= MOVEMENT_CONFIG.interactionDistance) {
           closestStation = station.slug;
         }
       }
     });
 
-    // Hysteresis: keep active station until distance exceeds 3.2m
+    // Hysteresis calculation: only clear prompt if player moves beyond threshold + hysteresis
     if (gameStore.state.nearbyStationSlug) {
       const currentStation = MULTIVERSE_STATIONS.find(
         (s) => s.slug === gameStore.state.nearbyStationSlug
@@ -278,7 +308,7 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
         const dx = pos.current.x - currentStation.position[0];
         const dz = pos.current.z - currentStation.position[2];
         const dist = Math.sqrt(dx * dx + dz * dz);
-        if (dist > 3.2) {
+        if (dist > MOVEMENT_CONFIG.interactionDistance + MOVEMENT_CONFIG.interactionHysteresis) {
           gameStore.setNearbyStationSlug(closestStation);
         }
       } else {
@@ -290,8 +320,8 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
   });
 
   return (
-    <group ref={playerGroupRef} position={[0, 0, 3]}>
-      {/* Transformation VFX Shield around Player */}
+    <group ref={playerGroupRef} position={MOVEMENT_CONFIG.respawnPosition}>
+      {/* Transformation Portal Shield (wraps around player without relocating them) */}
       {isTransforming && (
         <group position={[0, 0.9, 0]}>
           <mesh>
@@ -305,13 +335,14 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
         </group>
       )}
 
-      {/* The Active Controllable Avatar Mesh */}
-      <PlayerAvatar
+      {/* Render Active Skinned Avatar */}
+      <SkinnedModelAvatar
         avatarId={activeAvatar}
         isMoving={isMoving}
         isRunning={isRunning}
         isGrounded={isGrounded}
         abilityActive={abilityActive}
+        moveSpeed={currentSpeed.current}
       />
     </group>
   );
