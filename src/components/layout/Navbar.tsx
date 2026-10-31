@@ -36,6 +36,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/multiverse", label: "3D Hub" },
     { href: "/explore", label: "Explore" },
     { href: "/#featured", label: "Featured" },
     { href: "/#lore", label: "Multiverse Lore" },
@@ -43,6 +44,7 @@ export function Navbar() {
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
+    if (href === "/multiverse") return pathname === "/multiverse";
     if (href === "/explore") return pathname === "/explore" || pathname === "/gallery";
     return false;
   };

@@ -82,22 +82,30 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20 relative z-20"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 relative z-20"
         >
           <Link
-            href="/explore"
+            href="/multiverse"
             className="w-full sm:w-auto px-8 py-4 bg-[#ff1361] text-white text-sm font-black uppercase tracking-wider rounded-xl border-2 border-black shadow-[5px_5px_0px_#000] hover:shadow-[7px_7px_0px_#00e5ff] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 focus-visible:outline-2 focus-visible:outline-[#00e5ff]"
           >
-            <Compass className="w-5 h-5 animate-spin" style={{ animationDuration: "8s" }} />
-            <span>Enter the Spider-Verse</span>
+            <Sparkles className="w-5 h-5 text-[#ffe600] animate-pulse" />
+            <span>Launch 3D Multiverse Hub</span>
             <ArrowRight className="w-5 h-5" />
+          </Link>
+
+          <Link
+            href="/explore"
+            className="w-full sm:w-auto px-7 py-4 bg-[#12121e] text-white text-sm font-bold uppercase tracking-wider rounded-xl border-2 border-[#2b2b42] hover:border-[#00e5ff] shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+          >
+            <Compass className="w-4 h-4 text-[#00e5ff]" />
+            <span>Explore 2D Gallery</span>
           </Link>
 
           <a
             href="#featured"
-            className="w-full sm:w-auto px-7 py-4 bg-[#0e0e16] text-white text-sm font-bold uppercase tracking-wider rounded-xl border-2 border-[#232338] hover:border-white shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-4 bg-[#0e0e16]/80 text-gray-300 hover:text-white text-sm font-semibold uppercase tracking-wider rounded-xl border border-[#232338] hover:border-white shadow-[3px_3px_0px_#000] transition-all flex items-center justify-center"
           >
-            <span>Meet Featured Heroes</span>
+            <span>Featured Heroes</span>
           </a>
         </motion.div>
 
