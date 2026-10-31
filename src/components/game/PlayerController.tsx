@@ -141,23 +141,23 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
       return;
     }
 
-    // Calculate normalized 2D input
-    let inputX = 0;
-    let inputZ = 0;
+    // Calculate normalized 2D input (Forward/Backward and Right/Left)
+    let inputForward = 0;
+    let inputRight = 0;
 
-    if (keys.current.forward) inputZ -= 1;
-    if (keys.current.backward) inputZ += 1;
-    if (keys.current.left) inputX -= 1;
-    if (keys.current.right) inputX += 1;
+    if (keys.current.forward) inputForward += 1;
+    if (keys.current.backward) inputForward -= 1;
+    if (keys.current.right) inputRight += 1;
+    if (keys.current.left) inputRight -= 1;
 
     // Mobile joystick integration
     const mobVec = gameStore.state.mobileMoveVector;
     if (Math.abs(mobVec.x) > 0.1 || Math.abs(mobVec.y) > 0.1) {
-      inputX = mobVec.x;
-      inputZ = -mobVec.y;
+      inputRight += mobVec.x;
+      inputForward += mobVec.y;
     }
 
-    const inputLen = Math.sqrt(inputX * inputX + inputZ * inputZ);
+    const inputLen = Math.sqrt(inputRight * inputRight + inputForward * inputForward);
     const moving = inputLen > 0.08;
     const running = (keys.current.sprint || gameStore.state.mobileSprintActive) && moving;
 
@@ -172,13 +172,14 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
       const accelRate = delta / MOVEMENT_CONFIG.accelerationTime;
       currentSpeed.current = THREE.MathUtils.lerp(currentSpeed.current, targetSpeed, Math.min(1, accelRate * 6));
 
-      const normX = inputX / (inputLen || 1);
-      const normZ = inputZ / (inputLen || 1);
+      const normRight = inputRight / (inputLen || 1);
+      const normForward = inputForward / (inputLen || 1);
 
-      // Rotate directional input by camera yaw
+      // Rotate directional input by camera yaw:
+      // Camera looks forward along (sin(yaw), cos(yaw)) and right along (cos(yaw), -sin(yaw))
       const cameraYaw = gameStore.state.cameraYaw;
-      const worldMoveX = normX * Math.cos(cameraYaw) + normZ * Math.sin(cameraYaw);
-      const worldMoveZ = -normX * Math.sin(cameraYaw) + normZ * Math.cos(cameraYaw);
+      const worldMoveX = normForward * Math.sin(cameraYaw) + normRight * Math.cos(cameraYaw);
+      const worldMoveZ = normForward * Math.cos(cameraYaw) - normRight * Math.sin(cameraYaw);
 
       vel.current.x = worldMoveX * currentSpeed.current;
       vel.current.z = worldMoveZ * currentSpeed.current;
