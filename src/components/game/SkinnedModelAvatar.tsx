@@ -28,30 +28,36 @@ export function SkinnedModelAvatar({
   const config: CharacterModelConfig =
     CHARACTER_MODELS[avatarId] || CHARACTER_MODELS.civilian;
 
-  // If model is a rigged GLB, load and render via SkinnedMeshRenderer
+  // If model is a rigged GLB, load and render via SkinnedMeshRenderer with instant fallback
   if (config.modelStatus === "rigged-glb" && config.modelUrl) {
     return (
-      <SkinnedMeshRenderer
-        config={config}
-        avatarId={avatarId}
-        isMoving={isMoving}
-        isRunning={isRunning}
-        isGrounded={isGrounded}
-        abilityActive={abilityActive}
-        moveSpeed={moveSpeed}
-      />
+      <React.Suspense
+        fallback={
+          <PlayerAvatar
+            avatarId={avatarId as any}
+            isMoving={isMoving}
+            isRunning={isRunning}
+            isGrounded={isGrounded}
+            abilityActive={abilityActive}
+          />
+        }
+      >
+        <SkinnedMeshRenderer
+          config={config}
+          avatarId={avatarId}
+          isMoving={isMoving}
+          isRunning={isRunning}
+          isGrounded={isGrounded}
+          abilityActive={abilityActive}
+          moveSpeed={moveSpeed}
+        />
+      </React.Suspense>
     );
   }
 
   // Otherwise, render honest stylized temporary representation
   return (
     <group position={[0, 0, 0]}>
-      {/* Temporary Proxy Badge above character */}
-      <mesh position={[0, 2.3, 0]}>
-        <octahedronGeometry args={[0.14, 0]} />
-        <meshBasicMaterial color={config.accentColor} />
-      </mesh>
-
       <PlayerAvatar
         avatarId={avatarId as any}
         isMoving={isMoving}

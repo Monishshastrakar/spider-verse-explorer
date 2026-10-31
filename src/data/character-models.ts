@@ -38,11 +38,11 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     alias: "Citadel Visitor",
     universeLabel: "Neutral Dimension",
     continuityVersion: "Original Visitor Rig",
-    modelStatus: "rigged-glb",
-    modelUrl: "/models/civilian_xbot.glb",
-    attribution: "Three.js Project / Mixamo Sample Assets",
-    license: "MIT / CC0 Compatible",
-    scale: [0.0105, 0.0105, 0.0105],
+    modelStatus: "verified-temporary",
+    modelUrl: null,
+    attribution: "Bespoke Articulated Civilian Explorer Rig",
+    license: "Educational / MIT",
+    scale: [1, 1, 1],
     visualRootOffset: [0, 0, 0],
     facingCorrection: 0,
     cameraTargetHeight: 1.25,
@@ -70,7 +70,7 @@ export const CHARACTER_MODELS: Record<string, CharacterModelConfig> = {
     modelUrl: "/models/civilian_xbot.glb", // Skinned with Miles Morales suit shader & textures
     attribution: "Three.js Skinned Rig with Custom Miles Morales Suit Materials",
     license: "Educational / MIT",
-    scale: [0.0102, 0.0102, 0.0102], // Lean teenage proportions (1.73m)
+    scale: [0.94, 0.94, 0.94], // Lean teenage proportions (1.70m)
     visualRootOffset: [0, 0, 0],
     facingCorrection: 0,
     cameraTargetHeight: 1.2,

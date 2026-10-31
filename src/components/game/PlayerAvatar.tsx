@@ -246,63 +246,102 @@ function CivilianMesh({
     <group position={[0, 0, 0]}>
       {/* Torso & Head */}
       <group ref={torsoRef} position={[0, 0.85, 0]}>
-        {/* Casual Jacket / Hoodie */}
+        {/* Athletic Windbreaker / Hoodie */}
         <mesh position={[0, 0.25, 0]}>
-          <boxGeometry args={[0.42, 0.52, 0.24]} />
-          <meshStandardMaterial color="#2d3748" roughness={0.7} />
+          <boxGeometry args={[0.44, 0.54, 0.24]} />
+          <meshStandardMaterial color="#1e293b" roughness={0.6} />
+        </mesh>
+
+        {/* Jacket Zipper Strip */}
+        <mesh position={[0, 0.25, 0.122]}>
+          <planeGeometry args={[0.03, 0.52]} />
+          <meshBasicMaterial color="#38bdf8" />
+        </mesh>
+
+        {/* Folded Hood on Back */}
+        <mesh position={[0, 0.45, -0.12]}>
+          <boxGeometry args={[0.26, 0.14, 0.12]} />
+          <meshStandardMaterial color="#0f172a" roughness={0.8} />
         </mesh>
 
         {/* Head */}
         <mesh position={[0, 0.65, 0]}>
-          <sphereGeometry args={[0.16, 16, 16]} />
-          <meshStandardMaterial color="#e0ac69" roughness={0.6} />
+          <sphereGeometry args={[0.165, 20, 20]} />
+          <meshStandardMaterial color="#d49b6a" roughness={0.5} />
         </mesh>
 
-        {/* Hair */}
-        <mesh position={[0, 0.73, -0.02]}>
-          <boxGeometry args={[0.22, 0.12, 0.24]} />
-          <meshStandardMaterial color="#1a202c" roughness={0.9} />
+        {/* Sunglasses / Eyes */}
+        <mesh position={[0, 0.66, 0.14]}>
+          <boxGeometry args={[0.18, 0.05, 0.06]} />
+          <meshStandardMaterial color="#0f172a" roughness={0.2} metalness={0.8} />
+        </mesh>
+
+        {/* Textured Volumetric Hair */}
+        <mesh position={[0, 0.74, -0.02]}>
+          <boxGeometry args={[0.24, 0.14, 0.26]} />
+          <meshStandardMaterial color="#090d16" roughness={0.9} />
         </mesh>
 
         {/* Left Arm */}
-        <group ref={leftArmRef} position={[-0.28, 0.45, 0]}>
-          <mesh position={[0, -0.25, 0]}>
-            <capsuleGeometry args={[0.07, 0.35, 4, 8]} />
-            <meshStandardMaterial color="#2d3748" />
+        <group ref={leftArmRef} position={[-0.29, 0.46, 0]}>
+          <mesh position={[0, -0.22, 0]}>
+            <capsuleGeometry args={[0.07, 0.36, 4, 8]} />
+            <meshStandardMaterial color="#1e293b" />
+          </mesh>
+          {/* Hand */}
+          <mesh position={[0, -0.44, 0]}>
+            <sphereGeometry args={[0.06, 8, 8]} />
+            <meshStandardMaterial color="#d49b6a" />
           </mesh>
         </group>
 
         {/* Right Arm */}
-        <group ref={rightArmRef} position={[0.28, 0.45, 0]}>
-          <mesh position={[0, -0.25, 0]}>
-            <capsuleGeometry args={[0.07, 0.35, 4, 8]} />
-            <meshStandardMaterial color="#2d3748" />
+        <group ref={rightArmRef} position={[0.29, 0.46, 0]}>
+          <mesh position={[0, -0.22, 0]}>
+            <capsuleGeometry args={[0.07, 0.36, 4, 8]} />
+            <meshStandardMaterial color="#1e293b" />
+          </mesh>
+          {/* Hand */}
+          <mesh position={[0, -0.44, 0]}>
+            <sphereGeometry args={[0.06, 8, 8]} />
+            <meshStandardMaterial color="#d49b6a" />
           </mesh>
         </group>
       </group>
 
-      {/* Left Leg (Jeans + Sneakers) */}
-      <group ref={leftLegRef} position={[-0.12, 0.72, 0]}>
+      {/* Left Leg (Dark Denim + Two-Tone Sneakers) */}
+      <group ref={leftLegRef} position={[-0.13, 0.72, 0]}>
         <mesh position={[0, -0.38, 0]}>
           <capsuleGeometry args={[0.08, 0.48, 4, 8]} />
-          <meshStandardMaterial color="#1a365d" roughness={0.8} />
+          <meshStandardMaterial color="#1e3a5f" roughness={0.8} />
         </mesh>
-        {/* Sneaker */}
-        <mesh position={[0, -0.66, 0.05]}>
-          <boxGeometry args={[0.11, 0.09, 0.22]} />
-          <meshStandardMaterial color="#e2e8f0" />
+        {/* Sneaker Upper */}
+        <mesh position={[0, -0.65, 0.04]}>
+          <boxGeometry args={[0.11, 0.08, 0.22]} />
+          <meshStandardMaterial color="#0f172a" />
+        </mesh>
+        {/* Sneaker Sole */}
+        <mesh position={[0, -0.7, 0.04]}>
+          <boxGeometry args={[0.12, 0.03, 0.23]} />
+          <meshStandardMaterial color="#ffffff" />
         </mesh>
       </group>
 
       {/* Right Leg */}
-      <group ref={rightLegRef} position={[0.12, 0.72, 0]}>
+      <group ref={rightLegRef} position={[0.13, 0.72, 0]}>
         <mesh position={[0, -0.38, 0]}>
           <capsuleGeometry args={[0.08, 0.48, 4, 8]} />
-          <meshStandardMaterial color="#1a365d" roughness={0.8} />
+          <meshStandardMaterial color="#1e3a5f" roughness={0.8} />
         </mesh>
-        <mesh position={[0, -0.66, 0.05]}>
-          <boxGeometry args={[0.11, 0.09, 0.22]} />
-          <meshStandardMaterial color="#e2e8f0" />
+        {/* Sneaker Upper */}
+        <mesh position={[0, -0.65, 0.04]}>
+          <boxGeometry args={[0.11, 0.08, 0.22]} />
+          <meshStandardMaterial color="#0f172a" />
+        </mesh>
+        {/* Sneaker Sole */}
+        <mesh position={[0, -0.7, 0.04]}>
+          <boxGeometry args={[0.12, 0.03, 0.23]} />
+          <meshStandardMaterial color="#ffffff" />
         </mesh>
       </group>
     </group>
