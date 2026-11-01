@@ -37,7 +37,6 @@ export function PlayerAvatar({
     }
 
     const t = animTime.current;
-    const baseTorsoY = avatarId === "peni-parker" ? 0.95 : 0.88;
 
     if (!isGrounded) {
       // Airborne jumping/falling pose
@@ -45,7 +44,7 @@ export function PlayerAvatar({
       if (rightLegRef.current) rightLegRef.current.rotation.x = 0.5;
       if (leftArmRef.current) leftArmRef.current.rotation.x = -1.2;
       if (rightArmRef.current) rightArmRef.current.rotation.x = -1.2;
-      if (torsoRef.current) torsoRef.current.position.y = baseTorsoY + 0.05;
+      if (torsoRef.current) torsoRef.current.position.y = 0.05;
     } else if (isMoving) {
       // Walking / running swing
       const legAmplitude = isRunning ? 0.75 : 0.45;
@@ -61,16 +60,16 @@ export function PlayerAvatar({
 
       // Vertical bounce
       if (torsoRef.current) {
-        torsoRef.current.position.y = baseTorsoY + Math.abs(Math.sin(t)) * (isRunning ? 0.08 : 0.04);
+        torsoRef.current.position.y = Math.abs(Math.sin(t)) * (isRunning ? 0.1 : 0.05);
       }
     } else {
       // Idle breathing
-      const breath = Math.sin(t) * 0.02;
+      const breath = Math.sin(t) * 0.03;
       if (leftLegRef.current) leftLegRef.current.rotation.x = 0;
       if (rightLegRef.current) rightLegRef.current.rotation.x = 0;
       if (leftArmRef.current) leftArmRef.current.rotation.x = breath;
       if (rightArmRef.current) rightArmRef.current.rotation.x = -breath;
-      if (torsoRef.current) torsoRef.current.position.y = baseTorsoY + breath;
+      if (torsoRef.current) torsoRef.current.position.y = breath;
     }
   });
 
@@ -228,8 +227,7 @@ export function PlayerAvatar({
 }
 
 // ==========================================
-// ==========================================
-// Civilian Starting Avatar (Anatomical Humanoid)
+// Civilian Starting Avatar
 // ==========================================
 function CivilianMesh({
   torsoRef,
@@ -247,143 +245,111 @@ function CivilianMesh({
   return (
     <group position={[0, 0, 0]}>
       {/* Torso & Head */}
-      <group ref={torsoRef} position={[0, 0.88, 0]}>
-        {/* Anatomical Upper Rib Cage & Pectoral Contour */}
-        <mesh position={[0, 0.3, 0]}>
-          <cylinderGeometry args={[0.22, 0.18, 0.34, 24]} />
-          <meshStandardMaterial color="#1e293b" roughness={0.65} />
+      <group ref={torsoRef} position={[0, 0.85, 0]}>
+        {/* Athletic Windbreaker / Hoodie */}
+        <mesh position={[0, 0.25, 0]}>
+          <boxGeometry args={[0.44, 0.54, 0.24]} />
+          <meshStandardMaterial color="#1e293b" roughness={0.6} />
         </mesh>
 
-        {/* Athletic Waist Taper */}
-        <mesh position={[0, 0.1, 0]}>
-          <cylinderGeometry args={[0.18, 0.19, 0.2, 24]} />
-          <meshStandardMaterial color="#0f172a" roughness={0.7} />
+        {/* Jacket Zipper Strip */}
+        <mesh position={[0, 0.25, 0.122]}>
+          <planeGeometry args={[0.03, 0.52]} />
+          <meshBasicMaterial color="#38bdf8" />
         </mesh>
 
-        {/* Pelvis & Hip Structure */}
-        <mesh position={[0, -0.04, 0]}>
-          <cylinderGeometry args={[0.19, 0.16, 0.14, 24]} />
-          <meshStandardMaterial color="#1e3a5f" roughness={0.8} />
-        </mesh>
-
-        {/* Athletic Clavicle & Folded Hood Collar */}
-        <mesh position={[0, 0.44, -0.06]}>
-          <torusGeometry args={[0.14, 0.05, 16, 32]} />
+        {/* Folded Hood on Back */}
+        <mesh position={[0, 0.45, -0.12]}>
+          <boxGeometry args={[0.26, 0.14, 0.12]} />
           <meshStandardMaterial color="#0f172a" roughness={0.8} />
         </mesh>
 
-        {/* Natural Neck Column */}
-        <mesh position={[0, 0.5, 0]}>
-          <cylinderGeometry args={[0.075, 0.085, 0.12, 16]} />
+        {/* Head */}
+        <mesh position={[0, 0.65, 0]}>
+          <sphereGeometry args={[0.165, 20, 20]} />
           <meshStandardMaterial color="#d49b6a" roughness={0.5} />
         </mesh>
 
-        {/* Anatomical Contoured Head & Jaw */}
-        <mesh position={[0, 0.66, 0]}>
-          <sphereGeometry args={[0.155, 24, 24]} />
-          <meshStandardMaterial color="#d49b6a" roughness={0.5} />
-        </mesh>
-        <mesh position={[0, 0.6, 0.03]} rotation={[-0.2, 0, 0]}>
-          <cylinderGeometry args={[0.12, 0.07, 0.12, 16]} />
-          <meshStandardMaterial color="#d49b6a" roughness={0.5} />
-        </mesh>
-
-        {/* Sculpted Urban Eyewear */}
-        <mesh position={[0, 0.67, 0.13]}>
-          <torusGeometry args={[0.11, 0.02, 12, 24, Math.PI]} />
-          <meshStandardMaterial color="#0f172a" roughness={0.2} metalness={0.9} />
+        {/* Sunglasses / Eyes */}
+        <mesh position={[0, 0.66, 0.14]}>
+          <boxGeometry args={[0.18, 0.05, 0.06]} />
+          <meshStandardMaterial color="#0f172a" roughness={0.2} metalness={0.8} />
         </mesh>
 
         {/* Textured Volumetric Hair */}
-        <mesh position={[0, 0.73, -0.01]}>
-          <sphereGeometry args={[0.165, 20, 20]} />
+        <mesh position={[0, 0.74, -0.02]}>
+          <boxGeometry args={[0.24, 0.14, 0.26]} />
           <meshStandardMaterial color="#090d16" roughness={0.9} />
         </mesh>
 
-        {/* Left Arm: Deltoid + Tapered Arm + Articulated Hand */}
-        <group ref={leftArmRef} position={[-0.26, 0.44, 0]}>
-          <mesh position={[0, -0.02, 0]}>
-            <sphereGeometry args={[0.075, 16, 16]} />
+        {/* Left Arm */}
+        <group ref={leftArmRef} position={[-0.29, 0.46, 0]}>
+          <mesh position={[0, -0.22, 0]}>
+            <capsuleGeometry args={[0.07, 0.36, 4, 8]} />
             <meshStandardMaterial color="#1e293b" />
           </mesh>
-          <mesh position={[0, -0.2, 0]}>
-            <capsuleGeometry args={[0.06, 0.32, 6, 16]} />
-            <meshStandardMaterial color="#1e293b" />
-          </mesh>
-          <mesh position={[0, -0.42, 0]}>
-            <sphereGeometry args={[0.05, 12, 12]} />
+          {/* Hand */}
+          <mesh position={[0, -0.44, 0]}>
+            <sphereGeometry args={[0.06, 8, 8]} />
             <meshStandardMaterial color="#d49b6a" />
           </mesh>
         </group>
 
-        {/* Right Arm: Deltoid + Tapered Arm + Articulated Hand */}
-        <group ref={rightArmRef} position={[0.26, 0.44, 0]}>
-          <mesh position={[0, -0.02, 0]}>
-            <sphereGeometry args={[0.075, 16, 16]} />
+        {/* Right Arm */}
+        <group ref={rightArmRef} position={[0.29, 0.46, 0]}>
+          <mesh position={[0, -0.22, 0]}>
+            <capsuleGeometry args={[0.07, 0.36, 4, 8]} />
             <meshStandardMaterial color="#1e293b" />
           </mesh>
-          <mesh position={[0, -0.2, 0]}>
-            <capsuleGeometry args={[0.06, 0.32, 6, 16]} />
-            <meshStandardMaterial color="#1e293b" />
-          </mesh>
-          <mesh position={[0, -0.42, 0]}>
-            <sphereGeometry args={[0.05, 12, 12]} />
+          {/* Hand */}
+          <mesh position={[0, -0.44, 0]}>
+            <sphereGeometry args={[0.06, 8, 8]} />
             <meshStandardMaterial color="#d49b6a" />
           </mesh>
         </group>
       </group>
 
-      {/* Left Leg: Thigh + Calf + Athletic Sneaker */}
-      <group ref={leftLegRef} position={[-0.12, 0.74, 0]}>
-        <mesh position={[0, -0.18, 0]}>
-          <capsuleGeometry args={[0.075, 0.28, 6, 16]} />
+      {/* Left Leg (Dark Denim + Two-Tone Sneakers) */}
+      <group ref={leftLegRef} position={[-0.13, 0.72, 0]}>
+        <mesh position={[0, -0.38, 0]}>
+          <capsuleGeometry args={[0.08, 0.48, 4, 8]} />
           <meshStandardMaterial color="#1e3a5f" roughness={0.8} />
         </mesh>
-        <mesh position={[0, -0.44, 0]}>
-          <capsuleGeometry args={[0.065, 0.26, 6, 16]} />
-          <meshStandardMaterial color="#1e3a5f" roughness={0.8} />
+        {/* Sneaker Upper */}
+        <mesh position={[0, -0.65, 0.04]}>
+          <boxGeometry args={[0.11, 0.08, 0.22]} />
+          <meshStandardMaterial color="#0f172a" />
         </mesh>
-        {/* Athletic Sneaker */}
-        <group position={[0, -0.68, 0.04]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <capsuleGeometry args={[0.055, 0.16, 6, 12]} />
-            <meshStandardMaterial color="#0f172a" />
-          </mesh>
-          <mesh position={[0, -0.04, 0]}>
-            <boxGeometry args={[0.11, 0.025, 0.22]} />
-            <meshStandardMaterial color="#ffffff" />
-          </mesh>
-        </group>
+        {/* Sneaker Sole */}
+        <mesh position={[0, -0.7, 0.04]}>
+          <boxGeometry args={[0.12, 0.03, 0.23]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
       </group>
 
-      {/* Right Leg: Thigh + Calf + Athletic Sneaker */}
-      <group ref={rightLegRef} position={[0.12, 0.74, 0]}>
-        <mesh position={[0, -0.18, 0]}>
-          <capsuleGeometry args={[0.075, 0.28, 6, 16]} />
+      {/* Right Leg */}
+      <group ref={rightLegRef} position={[0.13, 0.72, 0]}>
+        <mesh position={[0, -0.38, 0]}>
+          <capsuleGeometry args={[0.08, 0.48, 4, 8]} />
           <meshStandardMaterial color="#1e3a5f" roughness={0.8} />
         </mesh>
-        <mesh position={[0, -0.44, 0]}>
-          <capsuleGeometry args={[0.065, 0.26, 6, 16]} />
-          <meshStandardMaterial color="#1e3a5f" roughness={0.8} />
+        {/* Sneaker Upper */}
+        <mesh position={[0, -0.65, 0.04]}>
+          <boxGeometry args={[0.11, 0.08, 0.22]} />
+          <meshStandardMaterial color="#0f172a" />
         </mesh>
-        {/* Athletic Sneaker */}
-        <group position={[0, -0.68, 0.04]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <capsuleGeometry args={[0.055, 0.16, 6, 12]} />
-            <meshStandardMaterial color="#0f172a" />
-          </mesh>
-          <mesh position={[0, -0.04, 0]}>
-            <boxGeometry args={[0.11, 0.025, 0.22]} />
-            <meshStandardMaterial color="#ffffff" />
-          </mesh>
-        </group>
+        {/* Sneaker Sole */}
+        <mesh position={[0, -0.7, 0.04]}>
+          <boxGeometry args={[0.12, 0.03, 0.23]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
       </group>
     </group>
   );
 }
 
 // ==========================================
-// Spider-Hero Playable Avatar (Anatomical Humanoid)
+// Spider-Hero Playable Avatar
 // ==========================================
 function SpiderHeroMesh({
   torsoRef,
@@ -413,180 +379,99 @@ function SpiderHeroMesh({
   return (
     <group scale={scale}>
       {/* Torso & Head */}
-      <group ref={torsoRef} position={[0, 0.88, 0]}>
-        {/* Anatomical Upper Rib Cage & Pectoral Silhouette */}
-        <mesh position={[0, 0.3, 0]}>
-          <cylinderGeometry args={[0.22, 0.175, 0.34, 24]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.42} metalness={0.08} />
+      <group ref={torsoRef} position={[0, 0.85, 0]}>
+        {/* Chest & Body */}
+        <mesh position={[0, 0.26, 0]}>
+          <boxGeometry args={[0.42, 0.54, 0.24]} />
+          <meshStandardMaterial color={primaryColor} roughness={0.4} metalness={0.2} />
         </mesh>
 
-        {/* Tapered Athletic Waist & Abdominal Core */}
-        <mesh position={[0, 0.1, 0]}>
-          <cylinderGeometry args={[0.175, 0.185, 0.2, 24]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.42} metalness={0.08} />
+        {/* Chest Emblem Badge */}
+        <mesh position={[0, 0.32, 0.125]}>
+          <planeGeometry args={[0.2, 0.2]} />
+          <meshBasicMaterial color={emblemColor} side={THREE.DoubleSide} />
         </mesh>
 
-        {/* Articulated Pelvis & Groin */}
-        <mesh position={[0, -0.04, 0]}>
-          <cylinderGeometry args={[0.185, 0.16, 0.14, 24]} />
-          <meshStandardMaterial color={secondaryColor} roughness={0.45} />
+        {/* Mask Head */}
+        <mesh position={[0, 0.66, 0]}>
+          <sphereGeometry args={[0.17, 16, 16]} />
+          <meshStandardMaterial color={primaryColor} roughness={0.3} />
         </mesh>
 
-        {/* Natural Neck Column */}
-        <mesh position={[0, 0.49, 0]}>
-          <cylinderGeometry args={[0.075, 0.085, 0.11, 16]} />
+        {/* Expressive Lenses */}
+        <mesh position={[-0.065, 0.67, 0.14]} rotation={[0, 0.1, 0]}>
+          <planeGeometry args={[0.07, 0.05]} />
+          <meshBasicMaterial color={eyeColor} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[0.065, 0.67, 0.14]} rotation={[0, -0.1, 0]}>
+          <planeGeometry args={[0.07, 0.05]} />
+          <meshBasicMaterial color={eyeColor} side={THREE.DoubleSide} />
+        </mesh>
+
+        {/* Gwen Hood */}
+        {accentDetails === "gwen" && (
+          <mesh position={[0, 0.66, -0.04]}>
+            <sphereGeometry args={[0.22, 16, 16]} />
+            <meshStandardMaterial color="#f5f5f7" roughness={0.6} side={THREE.BackSide} />
+          </mesh>
+        )}
+
+        {/* Hobie Spiked Mohawk */}
+        {accentDetails === "hobie" && (
+          <group position={[0, 0.83, 0]}>
+            <mesh position={[0, 0, -0.06]}><coneGeometry args={[0.03, 0.1, 8]} /><meshStandardMaterial color="#e0e0e0" /></mesh>
+            <mesh position={[0, 0, 0]}><coneGeometry args={[0.04, 0.12, 8]} /><meshStandardMaterial color="#e0e0e0" /></mesh>
+            <mesh position={[0, 0, 0.06]}><coneGeometry args={[0.03, 0.1, 8]} /><meshStandardMaterial color="#e0e0e0" /></mesh>
+          </group>
+        )}
+
+        {/* Noir Fedora & Trench Collar */}
+        {accentDetails === "noir" && (
+          <group position={[0, 0.82, 0]}>
+            <mesh><cylinderGeometry args={[0.3, 0.3, 0.02, 16]} /><meshStandardMaterial color="#1a1a1e" /></mesh>
+            <mesh position={[0, 0.07, 0]}><cylinderGeometry args={[0.18, 0.19, 0.12, 16]} /><meshStandardMaterial color="#1a1a1e" /></mesh>
+          </group>
+        )}
+
+        {/* Left Arm */}
+        <group ref={leftArmRef} position={[-0.28, 0.46, 0]}>
+          <mesh position={[0, -0.25, 0]}>
+            <capsuleGeometry args={[0.065, 0.38, 4, 8]} />
+            <meshStandardMaterial color={secondaryColor} roughness={0.4} />
+          </mesh>
+        </group>
+
+        {/* Right Arm */}
+        <group ref={rightArmRef} position={[0.28, 0.46, 0]}>
+          <mesh position={[0, -0.25, 0]}>
+            <capsuleGeometry args={[0.065, 0.38, 4, 8]} />
+            <meshStandardMaterial color={secondaryColor} roughness={0.4} />
+          </mesh>
+        </group>
+      </group>
+
+      {/* Left Leg */}
+      <group ref={leftLegRef} position={[-0.12, 0.72, 0]}>
+        <mesh position={[0, -0.38, 0]}>
+          <capsuleGeometry args={[0.075, 0.5, 4, 8]} />
           <meshStandardMaterial color={primaryColor} roughness={0.4} />
         </mesh>
-
-        {/* Mask Head: Anatomical Cranium & Sculpted Jaw */}
-        <mesh position={[0, 0.66, 0]}>
-          <sphereGeometry args={[0.16, 24, 24]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.35} />
+        <mesh position={[0, -0.67, 0.05]}>
+          <boxGeometry args={[0.1, 0.08, 0.22]} />
+          <meshStandardMaterial color={secondaryColor} />
         </mesh>
-        <mesh position={[0, 0.59, 0.03]} rotation={[-0.2, 0, 0]}>
-          <cylinderGeometry args={[0.125, 0.065, 0.13, 20]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.35} />
-        </mesh>
-
-        {/* Angled Spider-Verse 3D Lenses with Outer Bezel Frames */}
-        <group position={[0, 0.66, 0.13]}>
-          {/* Left Lens: Frame + Reflective Lens */}
-          <mesh position={[-0.065, 0, 0]} rotation={[0, 0.18, -0.08]}>
-            <ringGeometry args={[0.04, 0.06, 16]} />
-            <meshBasicMaterial color={accentDetails === "miles" ? "#ff1361" : "#000000"} side={THREE.DoubleSide} />
-          </mesh>
-          <mesh position={[-0.065, 0, 0.005]} rotation={[0, 0.18, -0.08]}>
-            <circleGeometry args={[0.045, 16]} />
-            <meshStandardMaterial color={eyeColor} roughness={0.15} metalness={0.1} />
-          </mesh>
-
-          {/* Right Lens: Frame + Reflective Lens */}
-          <mesh position={[0.065, 0, 0]} rotation={[0, -0.18, 0.08]}>
-            <ringGeometry args={[0.04, 0.06, 16]} />
-            <meshBasicMaterial color={accentDetails === "miles" ? "#ff1361" : "#000000"} side={THREE.DoubleSide} />
-          </mesh>
-          <mesh position={[0.065, 0, 0.005]} rotation={[0, -0.18, 0.08]}>
-            <circleGeometry args={[0.045, 16]} />
-            <meshStandardMaterial color={eyeColor} roughness={0.15} metalness={0.1} />
-          </mesh>
-        </group>
-
-        {/* Gwen Sleek Hood Drape & Collar */}
-        {accentDetails === "gwen" && (
-          <group position={[0, 0.58, -0.04]}>
-            {/* Hood Back Contour */}
-            <mesh position={[0, 0.08, -0.04]} rotation={[-0.15, 0, 0]}>
-              <sphereGeometry args={[0.18, 20, 20, 0, Math.PI * 2, 0, Math.PI * 0.55]} />
-              <meshStandardMaterial color="#f5f5f7" roughness={0.4} side={THREE.DoubleSide} />
-            </mesh>
-            {/* Teal Inner Lining Accent */}
-            <mesh position={[0, -0.06, 0.02]} rotation={[0.15, 0, 0]}>
-              <cylinderGeometry args={[0.15, 0.18, 0.1, 20, 1, true]} />
-              <meshStandardMaterial color="#00e5ff" roughness={0.3} side={THREE.DoubleSide} />
-            </mesh>
-          </group>
-        )}
-
-        {/* Hobie Spiked Mohawk (Contoured strictly on skull crest) */}
-        {accentDetails === "hobie" && (
-          <group position={[0, 0.82, 0]}>
-            {[-0.07, -0.035, 0, 0.03].map((z, idx) => (
-              <mesh key={idx} position={[0, 0.025, z]} rotation={[-0.1 * idx, 0, 0]}>
-                <coneGeometry args={[0.016, 0.055, 10]} />
-                <meshStandardMaterial color="#e0e0e0" metalness={0.9} roughness={0.2} />
-              </mesh>
-            ))}
-          </group>
-        )}
-
-        {/* Noir Tailored Fedora & Hatband */}
-        {accentDetails === "noir" && (
-          <group position={[0, 0.80, 0]}>
-            {/* Tilted Fedora Brim */}
-            <mesh position={[0, 0, 0.01]} rotation={[0.08, 0, 0]}>
-              <cylinderGeometry args={[0.21, 0.21, 0.012, 24]} />
-              <meshStandardMaterial color="#18181d" roughness={0.85} />
-            </mesh>
-            {/* Fedora Crown with Pinch */}
-            <mesh position={[0, 0.055, 0.005]} rotation={[0.08, 0, 0]}>
-              <cylinderGeometry args={[0.12, 0.145, 0.10, 24]} />
-              <meshStandardMaterial color="#18181d" roughness={0.85} />
-            </mesh>
-            {/* Hat Ribbon Band */}
-            <mesh position={[0, 0.018, 0.008]} rotation={[0.08, 0, 0]}>
-              <cylinderGeometry args={[0.148, 0.148, 0.02, 24]} />
-              <meshStandardMaterial color="#0d0d10" roughness={0.9} />
-            </mesh>
-          </group>
-        )}
-
-        {/* Left Arm: Deltoid + Bicep + Forearm + Hand */}
-        <group ref={leftArmRef} position={[-0.26, 0.44, 0]}>
-          <mesh position={[0, -0.02, 0]}>
-            <sphereGeometry args={[0.07, 16, 16]} />
-            <meshStandardMaterial color={secondaryColor} />
-          </mesh>
-          <mesh position={[0, -0.19, 0]}>
-            <capsuleGeometry args={[0.055, 0.3, 6, 16]} />
-            <meshStandardMaterial color={secondaryColor} roughness={0.4} />
-          </mesh>
-          <mesh position={[0, -0.4, 0]}>
-            <sphereGeometry args={[0.048, 12, 12]} />
-            <meshStandardMaterial color={secondaryColor} />
-          </mesh>
-        </group>
-
-        {/* Right Arm: Deltoid + Bicep + Forearm + Hand */}
-        <group ref={rightArmRef} position={[0.26, 0.44, 0]}>
-          <mesh position={[0, -0.02, 0]}>
-            <sphereGeometry args={[0.07, 16, 16]} />
-            <meshStandardMaterial color={secondaryColor} />
-          </mesh>
-          <mesh position={[0, -0.19, 0]}>
-            <capsuleGeometry args={[0.055, 0.3, 6, 16]} />
-            <meshStandardMaterial color={secondaryColor} roughness={0.4} />
-          </mesh>
-          <mesh position={[0, -0.4, 0]}>
-            <sphereGeometry args={[0.048, 12, 12]} />
-            <meshStandardMaterial color={secondaryColor} />
-          </mesh>
-        </group>
       </group>
 
-      {/* Left Leg: Thigh + Calf + Footwear */}
-      <group ref={leftLegRef} position={[-0.12, 0.74, 0]}>
-        <mesh position={[0, -0.18, 0]}>
-          <capsuleGeometry args={[0.07, 0.28, 6, 16]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.45} />
+      {/* Right Leg */}
+      <group ref={rightLegRef} position={[0.12, 0.72, 0]}>
+        <mesh position={[0, -0.38, 0]}>
+          <capsuleGeometry args={[0.075, 0.5, 4, 8]} />
+          <meshStandardMaterial color={primaryColor} roughness={0.4} />
         </mesh>
-        <mesh position={[0, -0.44, 0]}>
-          <capsuleGeometry args={[0.06, 0.26, 6, 16]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.45} />
+        <mesh position={[0, -0.67, 0.05]}>
+          <boxGeometry args={[0.1, 0.08, 0.22]} />
+          <meshStandardMaterial color={secondaryColor} />
         </mesh>
-        <group position={[0, -0.68, 0.04]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <capsuleGeometry args={[0.05, 0.16, 6, 12]} />
-            <meshStandardMaterial color={secondaryColor} />
-          </mesh>
-        </group>
-      </group>
-
-      {/* Right Leg: Thigh + Calf + Footwear */}
-      <group ref={rightLegRef} position={[0.12, 0.74, 0]}>
-        <mesh position={[0, -0.18, 0]}>
-          <capsuleGeometry args={[0.07, 0.28, 6, 16]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.45} />
-        </mesh>
-        <mesh position={[0, -0.44, 0]}>
-          <capsuleGeometry args={[0.06, 0.26, 6, 16]} />
-          <meshStandardMaterial color={primaryColor} roughness={0.45} />
-        </mesh>
-        <group position={[0, -0.68, 0.04]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <capsuleGeometry args={[0.05, 0.16, 6, 12]} />
-            <meshStandardMaterial color={secondaryColor} />
-          </mesh>
-        </group>
       </group>
     </group>
   );
@@ -609,149 +494,50 @@ function SpdrMechMesh({
   rightArmRef: React.RefObject<THREE.Group | null>;
 }) {
   return (
-    <group scale={[1.15, 1.15, 1.15]}>
+    <group scale={[1.25, 1.25, 1.25]}>
       {/* Heavy Spherical Chassis */}
       <group ref={torsoRef} position={[0, 0.95, 0]}>
-        {/* Candy Crimson Spherical Cockpit Shell */}
         <mesh>
-          <sphereGeometry args={[0.5, 32, 32]} />
-          <meshStandardMaterial color="#a81024" roughness={0.25} metalness={0.65} />
+          <sphereGeometry args={[0.48, 24, 24]} />
+          <meshStandardMaterial color="#c62828" roughness={0.3} metalness={0.7} />
         </mesh>
 
-        {/* Dark Carbon Side Cowls */}
-        <mesh position={[-0.32, 0.05, 0]} rotation={[0, 0, 0.25]}>
-          <cylinderGeometry args={[0.26, 0.3, 0.22, 16]} />
-          <meshStandardMaterial color="#1a1a22" roughness={0.6} metalness={0.4} />
-        </mesh>
-        <mesh position={[0.32, 0.05, 0]} rotation={[0, 0, -0.25]}>
-          <cylinderGeometry args={[0.26, 0.3, 0.22, 16]} />
-          <meshStandardMaterial color="#1a1a22" roughness={0.6} metalness={0.4} />
-        </mesh>
-
-        {/* Emotive Angled Anime LED Visor Eyes */}
-        <mesh position={[-0.14, 0.12, 0.46]} rotation={[0, 0.18, 0.28]}>
-          <boxGeometry args={[0.16, 0.05, 0.04]} />
-          <meshBasicMaterial color="#00e5ff" />
-        </mesh>
-        <mesh position={[0.14, 0.12, 0.46]} rotation={[0, -0.18, -0.28]}>
-          <boxGeometry args={[0.16, 0.05, 0.04]} />
+        {/* Emotive LED Visor */}
+        <mesh position={[0, 0.1, 0.44]} rotation={[0, 0, 0]}>
+          <boxGeometry args={[0.42, 0.12, 0.08]} />
           <meshBasicMaterial color="#00e5ff" />
         </mesh>
 
-        {/* Forehead Arachnid CPU Optical Core */}
-        <mesh position={[0, 0.26, 0.43]}>
-          <circleGeometry args={[0.035, 16]} />
-          <meshBasicMaterial color="#ff1361" />
-        </mesh>
-
-        {/* Dual Rocket Thruster Pods on Rear */}
-        <group position={[-0.24, 0.18, -0.42]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh>
-            <cylinderGeometry args={[0.09, 0.11, 0.18, 16]} />
-            <meshStandardMaterial color="#1f1f28" metalness={0.8} />
-          </mesh>
-          <mesh position={[0, -0.09, 0]}>
-            <circleGeometry args={[0.07, 16]} />
-            <meshBasicMaterial color="#00e5ff" side={THREE.DoubleSide} />
-          </mesh>
-        </group>
-        <group position={[0.24, 0.18, -0.42]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh>
-            <cylinderGeometry args={[0.09, 0.11, 0.18, 16]} />
-            <meshStandardMaterial color="#1f1f28" metalness={0.8} />
-          </mesh>
-          <mesh position={[0, -0.09, 0]}>
-            <circleGeometry args={[0.07, 16]} />
-            <meshBasicMaterial color="#00e5ff" side={THREE.DoubleSide} />
+        {/* Left Arm Cannon */}
+        <group ref={leftArmRef} position={[-0.55, 0.15, 0]}>
+          <mesh position={[0, -0.28, 0]}>
+            <cylinderGeometry args={[0.12, 0.15, 0.5, 12]} />
+            <meshStandardMaterial color="#ffffff" metalness={0.8} />
           </mesh>
         </group>
 
-        {/* Articulated Left Arm Blaster */}
-        <group ref={leftArmRef} position={[-0.52, 0.06, 0]}>
-          <mesh>
-            <sphereGeometry args={[0.09, 16, 16]} />
-            <meshStandardMaterial color="#1f1f28" metalness={0.8} />
-          </mesh>
-          <mesh position={[0, -0.16, 0]}>
-            <cylinderGeometry args={[0.06, 0.07, 0.22, 12]} />
-            <meshStandardMaterial color="#2d2d38" metalness={0.7} />
-          </mesh>
-          <mesh position={[0, -0.34, 0.04]}>
-            <cylinderGeometry args={[0.075, 0.09, 0.22, 12]} />
-            <meshStandardMaterial color="#a81024" metalness={0.6} />
-          </mesh>
-          <mesh position={[0, -0.46, 0.04]}>
-            <cylinderGeometry args={[0.035, 0.045, 0.05, 12]} />
-            <meshStandardMaterial color="#111116" metalness={0.9} />
-          </mesh>
-        </group>
-
-        {/* Articulated Right Arm Blaster */}
-        <group ref={rightArmRef} position={[0.52, 0.06, 0]}>
-          <mesh>
-            <sphereGeometry args={[0.09, 16, 16]} />
-            <meshStandardMaterial color="#1f1f28" metalness={0.8} />
-          </mesh>
-          <mesh position={[0, -0.16, 0]}>
-            <cylinderGeometry args={[0.06, 0.07, 0.22, 12]} />
-            <meshStandardMaterial color="#2d2d38" metalness={0.7} />
-          </mesh>
-          <mesh position={[0, -0.34, 0.04]}>
-            <cylinderGeometry args={[0.075, 0.09, 0.22, 12]} />
-            <meshStandardMaterial color="#a81024" metalness={0.6} />
-          </mesh>
-          <mesh position={[0, -0.46, 0.04]}>
-            <cylinderGeometry args={[0.035, 0.045, 0.05, 12]} />
-            <meshStandardMaterial color="#111116" metalness={0.9} />
+        {/* Right Arm Cannon */}
+        <group ref={rightArmRef} position={[0.55, 0.15, 0]}>
+          <mesh position={[0, -0.28, 0]}>
+            <cylinderGeometry args={[0.12, 0.15, 0.5, 12]} />
+            <meshStandardMaterial color="#ffffff" metalness={0.8} />
           </mesh>
         </group>
       </group>
 
-      {/* Hydraulic Mech Left Leg */}
-      <group ref={leftLegRef} position={[-0.26, 0.76, 0]}>
-        <mesh>
-          <sphereGeometry args={[0.09, 16, 16]} />
-          <meshStandardMaterial color="#1f1f28" metalness={0.8} />
-        </mesh>
-        <mesh position={[0, -0.20, -0.03]} rotation={[0.2, 0, 0]}>
-          <capsuleGeometry args={[0.07, 0.24, 6, 12]} />
-          <meshStandardMaterial color="#1f1f28" metalness={0.7} roughness={0.4} />
-        </mesh>
-        <mesh position={[0, -0.38, 0.02]}>
-          <sphereGeometry args={[0.07, 12, 12]} />
-          <meshStandardMaterial color="#a81024" metalness={0.6} />
-        </mesh>
-        <mesh position={[0, -0.56, 0.03]} rotation={[-0.12, 0, 0]}>
-          <capsuleGeometry args={[0.065, 0.24, 6, 12]} />
-          <meshStandardMaterial color="#1f1f28" metalness={0.7} roughness={0.4} />
-        </mesh>
-        <mesh position={[0, -0.73, 0.06]}>
-          <cylinderGeometry args={[0.11, 0.13, 0.05, 16]} />
-          <meshStandardMaterial color="#111116" metalness={0.8} roughness={0.3} />
+      {/* Heavy Mech Left Leg */}
+      <group ref={leftLegRef} position={[-0.24, 0.72, 0]}>
+        <mesh position={[0, -0.38, 0]}>
+          <capsuleGeometry args={[0.12, 0.45, 6, 12]} />
+          <meshStandardMaterial color="#ffffff" metalness={0.7} />
         </mesh>
       </group>
 
-      {/* Hydraulic Mech Right Leg */}
-      <group ref={rightLegRef} position={[0.26, 0.76, 0]}>
-        <mesh>
-          <sphereGeometry args={[0.09, 16, 16]} />
-          <meshStandardMaterial color="#1f1f28" metalness={0.8} />
-        </mesh>
-        <mesh position={[0, -0.20, -0.03]} rotation={[0.2, 0, 0]}>
-          <capsuleGeometry args={[0.07, 0.24, 6, 12]} />
-          <meshStandardMaterial color="#1f1f28" metalness={0.7} roughness={0.4} />
-        </mesh>
-        <mesh position={[0, -0.38, 0.02]}>
-          <sphereGeometry args={[0.07, 12, 12]} />
-          <meshStandardMaterial color="#a81024" metalness={0.6} />
-        </mesh>
-        <mesh position={[0, -0.56, 0.03]} rotation={[-0.12, 0, 0]}>
-          <capsuleGeometry args={[0.065, 0.24, 6, 12]} />
-          <meshStandardMaterial color="#1f1f28" metalness={0.7} roughness={0.4} />
-        </mesh>
-        <mesh position={[0, -0.73, 0.06]}>
-          <cylinderGeometry args={[0.11, 0.13, 0.05, 16]} />
-          <meshStandardMaterial color="#111116" metalness={0.8} roughness={0.3} />
+      {/* Heavy Mech Right Leg */}
+      <group ref={rightLegRef} position={[0.24, 0.72, 0]}>
+        <mesh position={[0, -0.38, 0]}>
+          <capsuleGeometry args={[0.12, 0.45, 6, 12]} />
+          <meshStandardMaterial color="#ffffff" metalness={0.7} />
         </mesh>
       </group>
     </group>

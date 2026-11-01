@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { gameStore } from "./GameState";
-import { SkinnedModelAvatar } from "./SkinnedModelAvatar";
+import { PlayerAvatar } from "./PlayerAvatar";
 import { MULTIVERSE_STATIONS } from "@/data/multiverse-stations";
 import { MOVEMENT_CONFIG } from "@/data/movement-config";
 
@@ -336,14 +336,13 @@ export function PlayerController({ onPositionUpdate }: PlayerControllerProps) {
         </group>
       )}
 
-      {/* Render Active Skinned Avatar */}
-      <SkinnedModelAvatar
+      {/* The Active Controllable Stylized Avatar Mesh */}
+      <PlayerAvatar
         avatarId={activeAvatar}
         isMoving={isMoving}
         isRunning={isRunning}
         isGrounded={isGrounded}
         abilityActive={abilityActive}
-        moveSpeed={currentSpeed.current}
       />
     </group>
   );
