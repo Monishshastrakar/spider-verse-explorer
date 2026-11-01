@@ -13,13 +13,13 @@ export function MultiverseRadarSection() {
   const activeChar = CHARACTERS[selectedIdx];
 
   return (
-    <section id="lore" className="py-24 bg-[#07070a] border-t-2 border-[#1f1f2e] relative overflow-hidden">
+    <section id="lore" className="py-20 bg-[#07070a] border-t-2 border-[#1f1f2e] relative overflow-hidden">
       {/* Background Halftone */}
       <div className="absolute inset-0 comic-halftone opacity-15 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <ScrollReveal>
-          <div className="text-center max-w-2xl mx-auto mb-14">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ffe600]/15 border border-[#ffe600]/40 text-[#ffe600] text-xs font-black uppercase tracking-widest mb-3 shadow-[2px_2px_0px_#000]">
               <Radio className="w-3.5 h-3.5 animate-pulse" />
               <span>Interactive Dimension Scanner</span>

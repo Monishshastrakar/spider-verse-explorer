@@ -12,13 +12,13 @@ export function FeaturedSection() {
   const featuredCharacters = [CHARACTERS[0], CHARACTERS[2], CHARACTERS[3]];
 
   return (
-    <section id="featured" className="py-24 bg-[#07070a] relative overflow-hidden">
+    <section id="featured" className="py-20 bg-[#07070a] relative overflow-hidden">
       {/* Background Halftone subtle pattern */}
       <div className="absolute inset-0 comic-halftone opacity-15 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff1361]/15 border border-[#ff1361]/40 text-[#ff1361] text-xs font-black uppercase tracking-widest mb-3 shadow-[2px_2px_0px_#000]">
                 <Flame className="w-3.5 h-3.5" />
@@ -43,7 +43,7 @@ export function FeaturedSection() {
         </ScrollReveal>
 
         {/* 3 Featured Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featuredCharacters.map((char, index) => (
             <ScrollReveal key={char.id} delay={index * 0.12}>
               <CharacterCard character={char} featured={true} />

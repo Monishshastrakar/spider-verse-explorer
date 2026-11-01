@@ -42,13 +42,13 @@ export function HowToExploreSection() {
   ];
 
   return (
-    <section id="how-to-explore" className="py-24 bg-[#0a0a10] border-t-2 border-[#1f1f2e] relative overflow-hidden">
+    <section id="how-to-explore" className="py-20 bg-[#0a0a10] border-t-2 border-[#1f1f2e] relative overflow-hidden">
       {/* Background Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#00e5ff]/5 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <ScrollReveal>
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00e5ff]/15 border border-[#00e5ff]/40 text-[#00e5ff] text-xs font-black uppercase tracking-widest mb-3 shadow-[2px_2px_0px_#000]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Guide to the Multiverse</span>
@@ -69,7 +69,7 @@ export function HowToExploreSection() {
             return (
               <ScrollReveal key={item.step} delay={index * 0.1}>
                 <div
-                  className="group relative h-full bg-[#0e0e16] border-2 border-[#1f1f2e] hover:border-[#00e5ff] rounded-2xl p-6 shadow-[4px_4px_0px_#000] hover:shadow-[6px_6px_0px_#000] transition-all hover:-translate-y-1 flex flex-col justify-between"
+                  className="group relative h-full bg-[#0e0e16] border-2 border-[#1f1f2e] hover:border-[#00e5ff] rounded-2xl p-5 shadow-[4px_4px_0px_#000] hover:shadow-[6px_6px_0px_#000] transition-all hover:-translate-y-1 flex flex-col justify-between"
                   style={{
                     borderColor: "#1f1f2e",
                   }}
@@ -99,7 +99,7 @@ export function HowToExploreSection() {
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-[#1a1a28] flex items-center gap-1.5 text-xs font-mono text-gray-500 group-hover:text-[#00e5ff] transition-colors">
+                  <div className="mt-5 pt-3 border-t border-[#1a1a28] flex items-center gap-1.5 text-xs font-mono text-gray-500 group-hover:text-[#00e5ff] transition-colors">
                     <span>STATUS: READY</span>
                   </div>
                 </div>
@@ -110,7 +110,7 @@ export function HowToExploreSection() {
 
         {/* Action Link to Explore */}
         <ScrollReveal delay={0.4}>
-          <div className="mt-14 text-center">
+          <div className="mt-12 text-center">
             <Link
               href="/explore"
               className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#ff1361] text-white text-xs font-black uppercase tracking-wider rounded-xl border-2 border-black shadow-[4px_4px_0px_#000] hover:shadow-[6px_6px_0px_#00e5ff] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"

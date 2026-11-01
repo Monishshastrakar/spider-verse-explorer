@@ -24,7 +24,7 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative min-h-[92vh] flex items-center justify-center overflow-hidden pt-28 pb-20 px-4"
+      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-24 pb-14 px-4"
       aria-label="Hero section: One Multiverse. Infinite Spider-People."
     >
       {/* 3D Multiverse Portal (Dynamic Three.js layer) */}
@@ -49,7 +49,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0e0e16] border-2 border-black text-[#00e5ff] text-xs font-black uppercase tracking-widest shadow-[3px_3px_0px_#ff1361] mb-6"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0e0e16] border-2 border-black text-[#00e5ff] text-xs font-black uppercase tracking-widest shadow-[3px_3px_0px_#ff1361] mb-4"
         >
           <Sparkles className="w-3.5 h-3.5 text-[#ff1361] animate-spin" style={{ animationDuration: "6s" }} />
           <span>The Web of Life & Destiny</span>
@@ -60,7 +60,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl sm:text-7xl md:text-8xl lg:text-8xl font-black text-white tracking-tight uppercase leading-[0.95] mb-6 drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight uppercase leading-[0.92] mb-5 drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
         >
           One <span className="text-[#00e5ff]">Multiverse.</span>
           <br />
@@ -72,7 +72,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-base sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 font-medium leading-relaxed"
+          className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-8 font-medium leading-relaxed"
         >
           Traverse dimensional rifts, track canonical anomalies across the Spider-Society, and meet the heroes anchoring every reality.
         </motion.p>
@@ -82,7 +82,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 relative z-20"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14 relative z-20"
         >
           <Link
             href="/multiverse"
@@ -114,7 +114,7 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="relative max-w-3xl mx-auto mt-4 pt-2 z-10"
+          className="relative max-w-3xl mx-auto mt-2 z-10"
         >
           <div className="grid grid-cols-3 gap-3 md:gap-6">
             {previewCharacters.map((char, index) => {
@@ -152,7 +152,7 @@ export function HeroSection() {
             })}
           </div>
 
-          <p className="text-xs font-mono text-gray-500 mt-6 uppercase tracking-wider">
+          <p className="text-xs font-mono text-gray-500 mt-4 uppercase tracking-wider">
             ✦ Real-time Multiverse Synchronizer Active • 8 Core Universes Tracked ✦
           </p>
         </motion.div>

@@ -80,7 +80,7 @@ export function CharacterCard({
       }}
     >
       {/* Top Banner with Universe Label & Halftone Overlay */}
-      <div className="relative p-5 pb-3">
+      <div className="relative p-4 pb-2">
         <div className="absolute inset-0 comic-halftone opacity-20 pointer-events-none" />
 
         <div className="relative flex items-center justify-between gap-2 z-10">
@@ -100,7 +100,7 @@ export function CharacterCard({
         </div>
 
         {/* Character Illustration Frame with Custom Focal Point */}
-        <div className="relative mt-4 mb-2 mx-auto w-full aspect-square max-w-[240px] rounded-xl overflow-hidden border border-white/10 bg-[#07070a] flex items-center justify-center group-hover:border-white/30 transition-colors">
+        <div className="relative mt-3 mb-1 mx-auto w-full aspect-square max-w-[220px] rounded-xl overflow-hidden border border-white/10 bg-[#07070a] flex items-center justify-center group-hover:border-white/30 transition-colors">
           {!imgError ? (
             <img
               src={character.image}
@@ -128,7 +128,7 @@ export function CharacterCard({
       </div>
 
       {/* Card Content & Details */}
-      <div className="relative p-5 pt-1 flex-1 flex flex-col justify-between z-10">
+      <div className="relative p-4 pt-1 flex-1 flex flex-col justify-between z-10">
         <div>
           <h3 className="text-xl md:text-2xl font-black text-white tracking-tight uppercase group-hover:text-[#00e5ff] transition-colors leading-tight">
             {character.name}
@@ -138,7 +138,7 @@ export function CharacterCard({
           </p>
 
           {/* Powers Summary Tags */}
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-3 flex flex-wrap gap-1.5">
             {character.powers.slice(0, 3).map((power) => (
               <span
                 key={power}
@@ -156,7 +156,7 @@ export function CharacterCard({
         </div>
 
         {/* Clear Action Button with Multiverse Transition */}
-        <div className="mt-6 pt-4 border-t border-[#1a1a28]">
+        <div className="mt-4 pt-3 border-t border-[#1a1a28]">
           <MultiverseJumpLink
             character={character}
             targetUrl={targetUrl}

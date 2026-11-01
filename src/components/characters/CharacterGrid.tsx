@@ -53,7 +53,7 @@ export function CharacterGrid() {
   return (
     <div className="w-full">
       {/* Controls Bar */}
-      <div className="mb-8 p-4 md:p-6 bg-[#0c0c14] border-2 border-[#1f1f2e] rounded-2xl shadow-[4px_4px_0px_#000] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div className="mb-6 p-4 md:p-5 bg-[#0c0c14] border-2 border-[#1f1f2e] rounded-2xl shadow-[4px_4px_0px_#000] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Results Count & Badges */}
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-[#ff1361]/20 border border-[#ff1361] flex items-center justify-center text-[#ff1361]">
@@ -92,7 +92,7 @@ export function CharacterGrid() {
       {filteredAndSorted.length > 0 ? (
         <motion.div
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
         >
           <AnimatePresence>
             {filteredAndSorted.map((character) => (

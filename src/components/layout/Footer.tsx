@@ -1,15 +1,25 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Globe, Heart, ShieldAlert, Sparkles } from "lucide-react";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Hide the footer on full-screen 3D experiences (such as the 3D Multiverse Hub)
+  if (pathname?.startsWith("/multiverse")) {
+    return null;
+  }
+
   return (
-    <footer className="border-t-2 border-[#1f1f2e] bg-[#07070a] pt-14 pb-10 text-gray-400 relative overflow-hidden" role="contentinfo">
+    <footer className="border-t-2 border-[#1f1f2e] bg-[#07070a] pt-10 pb-8 text-gray-400 relative overflow-hidden" role="contentinfo">
       {/* Subtle halftone background */}
       <div className="absolute inset-0 comic-halftone opacity-20 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Column 1: Brand & Project */}
           <div className="md:col-span-2 flex flex-col gap-3">
             <div className="flex items-center gap-3">

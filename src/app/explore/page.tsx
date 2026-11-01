@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function ExplorePage() {
   return (
-    <div className="relative min-h-screen bg-[#07070a] pt-28 pb-20 overflow-hidden">
+    <div className="relative min-h-screen bg-[#07070a] pt-32 md:pt-40 pb-16 overflow-hidden">
       {/* Background Interactive Spider Web Canvas */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <AnimatedWeb particleColor="#ff1361" lineColor="#00e5ff" />
@@ -20,7 +20,7 @@ export default function ExplorePage() {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header Section */}
-        <div className="mb-10 text-center max-w-3xl mx-auto">
+        <div className="mb-8 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff1361]/15 border border-[#ff1361]/40 text-[#ff1361] text-xs font-black uppercase tracking-widest mb-4 shadow-[2px_2px_0px_#000]">
             <Compass className="w-3.5 h-3.5" />
             <span>Spider-Society Dimensional Index</span>
